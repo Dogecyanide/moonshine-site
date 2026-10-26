@@ -18,6 +18,8 @@ const JA = {
   tagline: "スーパーマリオサンシャインの練習用mod",
   sub: "Nintendont経由のWii実機でエミュレーターのようなステート、GCT generatorの練習コードを内蔵、ILシステム、ゴーストなど多数の機能を搭載。<strong>日本版1.0</strong>・<strong>北米版</strong>・<strong>欧州版</strong>に対応。",
   dlMain: "Wii版をダウンロード",
+  dlDolphin: "Dolphin版をダウンロード",
+  jpOnly: "日本版専用",
   latestRelease: "最新リリース",
   discord: "Discordに参加",
   github: "GitHubで見る",
@@ -90,6 +92,7 @@ const EN_EXTRA = {
   soonSub: `Follow along on the <a href="${DISCORD}">Discord</a>.`,
   menusEn: "English menus",
   menusJa: "Japanese menus",
+  jpOnly: "JP only",
   latestLine: (name, date) => `Latest: ${name} · released ${date}`,
   offline: `Couldn't reach GitHub. You can still download from the <a href="${FALLBACK}">latest release page</a>.`,
   themeGroup: "Theme",
@@ -189,6 +192,19 @@ function renderRelease() {
     document.getElementById("dl-main").href = main.browser_download_url;
     document.getElementById("dl-main-meta").textContent =
       [rel.tag_name, label, fmtSize(main.size)].filter(Boolean).join(" · ");
+  }
+
+  // Dolphin button: English menus BPS (all regions), or the Japanese-menus BPS (JP 1.0 only) in Japanese.
+  const dolOrder = lang === "ja"
+    ? [["JAPANESE-MENUS_Dolphin", ["menusJa", "jpOnly"]], ["ENGLISH-MENUS_Dolphin", ["menusEn"]]]
+    : [["ENGLISH-MENUS_Dolphin", ["menusEn"]], ["JAPANESE-MENUS_Dolphin", ["menusJa", "jpOnly"]]];
+  let dol = null, dolLabels = [];
+  for (const [k, ls] of dolOrder) { dol = find(k); if (dol) { dolLabels = ls.map(t); break; } }
+  if (!dol) dol = find("Dolphin");
+  if (dol) {
+    document.getElementById("dl-dolphin").href = dol.browser_download_url;
+    document.getElementById("dl-dolphin-meta").textContent =
+      [rel.tag_name, ...dolLabels, fmtSize(dol.size)].filter(Boolean).join(" · ");
   }
 }
 
