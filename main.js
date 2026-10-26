@@ -61,6 +61,8 @@ const JA = {
   f6: "ボタン割り当てからHUD要素の文字・位置・色・大きさまで、<strong>ほぼすべてをカスタマイズ可能</strong>。",
   guides: "AIの力を借りて作られたソフトウェアです。自己責任でご利用ください。ガイド：<a href=\"https://github.com/panther03/moonshine/blob/main/doc/guide-ja.md\">日本語</a> · <a href=\"https://github.com/panther03/moonshine/blob/main/doc/guide-en.md\">English</a>",
   allReleases: "すべてのリリース",
+  allFeat: "全機能ガイド",
+  allFeatMeta: "ガイドブックを開く",
   legal: "Moonshineはファンが制作したmodです。スーパーマリオサンシャインは© Nintendoです。ゲーム本体はご自身でご用意ください。",
   soonTitle: "トレーラー近日公開",
   soonSub: `最新情報は<a href="${DISCORD}">Discord</a>で。`,
