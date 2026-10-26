@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Moonshine — Super Mario Sunshine practice mod</title>
+  <meta name="description" content="Moonshine is a Super Mario Sunshine practice mod: savestates on Wii through Nintendont, integrated practice codes, IL system, ghosts and more. Supports JP 1.0, US and PAL.">
+  <meta property="og:title" content="Moonshine — Super Mario Sunshine practice mod">
+  <meta property="og:description" content="Savestates on Wii, integrated practice codes, IL timing, ghosts and more. JP 1.0, US and PAL.">
+  <meta property="og:image" content="assets/showcase.webp">
+  <meta name="theme-color" content="#0b2a4a">
+  <link rel="icon" href="assets/icon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="sun" aria-hidden="true"></div>
+    <div class="wrap hero-inner">
+      <img class="logo" src="assets/icon.png" alt="Moonshine" width="256" height="96">
+      <h1>Moonshine</h1>
+      <p class="tagline">A Super Mario Sunshine practice mod</p>
+      <p class="sub">Emulator-like savestates on Wii through Nintendont, the GCT generator practice codes built in, an integrated IL system, ghosts and much more. Supports <strong>JP 1.0</strong>, <strong>US</strong> and <strong>PAL</strong>.</p>
+
+      <div class="cta">
+        <a id="dl-main" class="btn btn-primary" href="https://github.com/panther03/moonshine/releases/latest">
+          <span class="btn-label">Download for Wii</span>
+          <span id="dl-main-meta" class="btn-meta">Latest release</span>
+        </a>
+        <a class="btn btn-discord" href="https://discord.gg/72c42Teq3A" target="_blank" rel="noopener">Join the Discord</a>
+        <a class="btn btn-ghost" href="https://github.com/panther03/moonshine" target="_blank" rel="noopener">View on GitHub</a>
+      </div>
+      <p id="release-info" class="release-info">Fetching latest release…</p>
+    </div>
+    <div class="waves" aria-hidden="true"></div>
+  </header>
+
+  <main>
+    <section class="wrap" id="trailer">
+      <h2>Trailer</h2>
+      <div id="trailer-slot" class="video"></div>
+    </section>
+
+    <section class="wrap" id="download">
+      <h2>Choose your download</h2>
+      <p class="lead">Wii users want a <strong>Launcher</strong> ZIP. Dolphin users want a <strong>Dolphin</strong> ZIP. The menu language belongs to the download, not the game region.</p>
+      <div class="cards">
+        <a class="card dl" data-asset="ENGLISH-MENUS_Launcher" href="https://github.com/panther03/moonshine/releases/latest">
+          <span class="tag">Wii · Recommended</span>
+          <h3>Launcher — English menus</h3>
+          <p>For the Homebrew Channel. US, PAL and JP. English throughout.</p>
+          <span class="file">Latest release</span>
+        </a>
+        <a class="card dl" data-asset="JAPANESE-MENUS_Launcher" href="https://github.com/panther03/moonshine/releases/latest">
+          <span class="tag">Wii · 日本語</span>
+          <h3>Launcher — Japanese menus</h3>
+          <p>US, PAL and JP. Japanese launcher; Japanese in-game menus on JP, English on US/PAL.</p>
+          <span class="file">Latest release</span>
+        </a>
+        <a class="card dl" data-asset="ENGLISH-MENUS_Dolphin" href="https://github.com/panther03/moonshine/releases/latest">
+          <span class="tag">Dolphin</span>
+          <h3>Dolphin — English menus</h3>
+          <p>BPS patches for your own clean ISO. US, PAL and JP.</p>
+          <span class="file">Latest release</span>
+        </a>
+        <a class="card dl" data-asset="JAPANESE-MENUS_Dolphin" href="https://github.com/panther03/moonshine/releases/latest">
+          <span class="tag">Dolphin · 日本語</span>
+          <h3>Dolphin — Japanese menus</h3>
+          <p>BPS patch for your own clean JP ISO. Japanese menus.</p>
+          <span class="file">Latest release</span>
+        </a>
+      </div>
+      <p class="small">All files come straight from <a href="https://github.com/panther03/moonshine/releases">GitHub Releases</a>. <a id="notes-link" href="https://github.com/panther03/moonshine/releases/latest">Read the release notes →</a></p>
+    </section>
+
+    <section class="wrap" id="install">
+      <h2>Installing</h2>
+      <div class="cols">
+        <div class="panel">
+          <h3>Wii (console)</h3>
+          <ol>
+            <li>Download a <strong>Launcher</strong> ZIP.</li>
+            <li>Copy its <code>apps</code> folder to the root of your SD card, so the launcher is at <code>/apps/moonshine_launcher/boot.dol</code>.</li>
+            <li>Start it from the Homebrew Channel and pick JP, US or PAL Sunshine from SD, USB or a real disc.</li>
+          </ol>
+          <p class="note">Updating? Replace the app files and use the launcher and mod files from the same ZIP. If you still have <code>apps/susamune_launcher</code>, rename it to <code>apps/moonshine_launcher</code> first. Your settings, records, ghosts and states live in <code>/Moonshine data</code>.</p>
+        </div>
+        <div class="panel">
+          <h3>Dolphin (emulator)</h3>
+          <ol>
+            <li>Download a <strong>Dolphin</strong> ZIP.</li>
+            <li>Apply the matching BPS patch to your own clean ISO with a BPS patcher such as <a href="https://github.com/Alcaro/Flips/releases" target="_blank" rel="noopener">Floating IPS</a>. The patch verifies the source image first.</li>
+            <li>Put a memory card in <strong>slot B</strong> so your settings persist.</li>
+            <li>For goop to save and load correctly with savestates, set <em>Graphics → Hacks → Texture Cache Accuracy</em> to <strong>Safe</strong>.</li>
+          </ol>
+          <p class="note">SD state and TAS file menus need the Wii launcher; Dolphin has three memory slots.</p>
+        </div>
+      </div>
+      <p class="warn">We strongly advise against running Moonshine with Gecko codes enabled — they will either break or be broken by Moonshine's features. GameCube hardware is not supported.</p>
+    </section>
+
+    <section class="wrap" id="features">
+      <h2>What's inside</h2>
+      <figure class="showcase">
+        <img src="assets/showcase.webp" alt="Moonshine menus and practice features" width="2560" height="960">
+      </figure>
+      <ul class="features">
+        <li><strong>Savestates</strong> — three compressed slots, with named SD states on Wii.</li>
+        <li><strong>Frame advance, free camera</strong> and TAS projects.</li>
+        <li><strong>Practice codes built in</strong> — timer, metadata, input display, level select, warp wheel and more.</li>
+        <li><strong>IL system</strong> — per-level PBs, a PB fanfare and Any% plaza segments, doubling as a warp list.</li>
+        <li><strong>Ghosts</strong> to race against.</li>
+        <li><strong>Configurable everything</strong> — button binds, and the text, position, colour and size of HUD elements.</li>
+      </ul>
+      <p class="small">Vibe-coded software — use at your own risk. See the <a href="https://github.com/panther03/moonshine/blob/main/doc/guide-en.md">English guide</a> · <a href="https://github.com/panther03/moonshine/blob/main/doc/guide-ja.md">日本語ガイド</a>.</p>
+    </section>
+  </main>
+
+  <footer class="wrap footer">
+    <p><a href="https://discord.gg/72c42Teq3A">Discord</a> · <a href="https://github.com/panther03/moonshine">GitHub</a> · <a href="https://github.com/panther03/moonshine/releases">All releases</a></p>
+    <p class="small">Moonshine is a fan-made mod. Super Mario Sunshine is © Nintendo. You need your own copy of the game.</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
