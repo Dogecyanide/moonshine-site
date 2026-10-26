@@ -271,10 +271,10 @@ p.small.help{margin-top:18px}
 .js .g-group.is-open{display:block}
 .g-doodles{padding:10px 0 4px}
 
-.g-content{padding:20px 40px 30px 40px}
-.g-version{margin:0 0 14px;color:var(--muted);font-size:.85rem}
+.g-content{padding:0}
 .g-chapter{margin:0 0 40px}
-.js .g-chapter{margin:0}
+.g-scroll{padding:22px 40px 30px 40px}
+.g-folio,.g-shade,.g-back{display:none}
 .g-chapter h2{scroll-margin-top:92px}
 .g-chapter h2:focus{outline:none}
 .g-chapter h2 .sprite{animation:pose 1.5s steps(1) infinite}
@@ -312,6 +312,36 @@ p.small.help{margin-top:18px}
 .g-next .g-pn-k .l-en::before,.g-next .g-pn-k .l-ja::before{content:none}
 .g-next .g-pn-k .l-en::after,.g-next .g-pn-k .l-ja::after{content:" ›"}
 
+/* ---- book pages: every chapter is a sheet of the same size; changing chapter turns the page ---- */
+.js .g-page{height:clamp(460px,calc(100vh - 92px),940px);height:clamp(460px,calc(100svh - 92px),940px)}
+.js .g-page{overflow:hidden}
+.js .g-side{min-height:0;overflow:hidden}
+.js .g-side-inner{position:static;max-height:100%;height:100%}
+.js .g-content{position:relative;min-height:0;padding:0}
+.js .g-stage{position:absolute;inset:0;perspective:2600px;perspective-origin:20% 50%}
+.js .g-chapter{display:none;position:absolute;inset:0;margin:0;transform-style:preserve-3d;transform-origin:0 50%}
+.js .g-chapter.is-cur,.js .g-chapter.is-leaf,.js .g-chapter.is-under{display:block}
+.js .g-chapter.is-cur{z-index:2}
+.js .g-chapter.is-under{z-index:1}
+.js .g-chapter.is-leaf{z-index:3}
+.js .g-face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;
+  background:linear-gradient(90deg,rgba(60,40,10,.16),rgba(60,40,10,0) 26px),var(--paper) var(--paper-img) 0 0/64px 64px}
+[data-theme="dark"].js .g-face{background:linear-gradient(90deg,rgba(0,0,0,.28),rgba(0,0,0,0) 26px),var(--paper) var(--paper-img) 0 0/64px 64px}
+.js .g-back{display:block;transform:rotateY(180deg);
+  background:linear-gradient(270deg,rgba(60,40,10,.22),rgba(60,40,10,0) 40px),linear-gradient(90deg,rgba(255,250,225,.18),rgba(0,0,0,.08)),var(--paper) var(--paper-img) 0 0/64px 64px;
+  box-shadow:inset 0 0 0 1px var(--rule)}
+.js .g-scroll{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;padding:22px 34px 46px 40px;
+  scrollbar-width:thin;scrollbar-color:var(--trim) transparent}
+.js .g-scroll::-webkit-scrollbar{width:10px}
+.js .g-scroll::-webkit-scrollbar-track{background:transparent;margin:8px 0}
+.js .g-scroll::-webkit-scrollbar-thumb{background:var(--trim);border-radius:6px;border:3px solid transparent;background-clip:padding-box}
+.js .g-scroll::-webkit-scrollbar-thumb:hover{background-color:var(--rule)}
+.js .g-folio{display:block;position:absolute;right:22px;bottom:10px;padding:1px 10px;border-radius:999px;font-size:.78rem;font-weight:800;color:var(--muted);
+  background:var(--paper-hi);box-shadow:0 0 0 1.5px var(--trim);pointer-events:none}
+.js .g-shade{display:block;position:absolute;inset:0;pointer-events:none;opacity:0;
+  background:linear-gradient(90deg,rgba(0,0,0,0) 0,rgba(0,0,0,.1) 55%,rgba(30,20,0,.38) 100%)}
+.js .g-content.is-turning{z-index:5}
+
 /* the button on the main page that opens this guide */
 .btn-guide{margin-top:20px}
 
@@ -326,10 +356,15 @@ p.small.help{margin-top:18px}
   .g-ch{white-space:nowrap;font-size:.92rem;padding:6px 12px}
   .g-ch.is-sel::before{display:none}
   .no-js .g-group{margin-bottom:8px}
-  .g-content{padding:20px 24px 26px 24px}
+  .js .g-page{grid-template-rows:auto minmax(0,1fr);height:clamp(420px,calc(100vh - 76px),900px);height:clamp(420px,calc(100svh - 76px),900px)}
+  .js .g-page{overflow:visible}
+  .js .g-content{overflow:hidden}
+  .js .g-side{overflow:visible}
+  .js .g-side-inner{height:auto}
+  .js .g-scroll{padding:18px 22px 44px 26px}
 }
 @media (max-width:680px){
-  .g-content{padding:16px 14px 22px 16px}
+  .js .g-scroll{padding:16px 14px 44px 18px}
   .g-two{grid-template-columns:1fr}
   .g-pn{grid-template-columns:1fr}
   .g-pn .g-next{grid-column:auto}
@@ -338,4 +373,5 @@ p.small.help{margin-top:18px}
 }
 @media (prefers-reduced-motion:reduce){
   .g-ch::before{animation:none!important;background-position:0 0!important}
+  .g-chapter h2 .sprite{animation:none!important;background-position:0 0!important;transform:none!important}
 }

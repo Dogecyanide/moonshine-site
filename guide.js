@@ -78,10 +78,76 @@ function updateTitle() {
   document.title = current ? `${chapterTitle(current)} · ${t("title")}` : t("title");
 }
 
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
+const content = document.querySelector(".g-content");
+const FLIP_MS = 560;
+let turning = null; // { anims, done }
+
+function endTurn() {
+  if (!turning) return;
+  const t = turning; turning = null;
+  t.anims.forEach(a => a.cancel());
+  t.done();
+}
+
+// Turn the page. Forward: the current sheet lifts at its right edge and turns over the spine,
+// showing its blank back. Backward: the previous sheet turns back in from the left onto the stack.
+function turnPage(from, to, dir) {
+  endTurn();
+  const ease = "cubic-bezier(.42,.08,.32,1)";
+  const anims = [];
+  let done;
+  if (reduceMotion.matches) {
+    from.classList.add("is-under");
+    to.classList.add("is-leaf");
+    anims.push(to.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 220, easing: "ease-out" }));
+    done = () => { from.classList.remove("is-under"); to.classList.remove("is-leaf"); };
+  } else {
+    content.classList.add("is-turning");
+    const leaf = dir > 0 ? from : to, under = dir > 0 ? to : from;
+    leaf.classList.add("is-leaf");
+    under.classList.add("is-under");
+    let k = [
+      { transform: "rotateY(0deg)", offset: 0 },
+      { transform: "rotateY(-95deg)", offset: .55 },
+      { transform: "rotateY(-180deg)", offset: 1 },
+    ];
+    // Opacity lives on the faces: opacity on the sheet itself would flatten the 3D and show the front mirrored.
+    let fade = [{ opacity: 1 }, { opacity: 1, offset: .7 }, { opacity: 0 }];
+    let shade = [{ opacity: 0 }, { opacity: .85, offset: .5 }, { opacity: 1 }];
+    let cast = [{ opacity: .55 }, { opacity: .35, offset: .5 }, { opacity: 0 }];
+    if (dir < 0) {
+      k = k.slice().reverse().map(f => ({ ...f, offset: 1 - f.offset }));
+      fade = fade.slice().reverse().map((f, i, a) => ({ opacity: f.opacity, offset: i / (a.length - 1) }));
+      fade[1].offset = .3;
+      shade = shade.slice().reverse().map((f, i, a) => ({ opacity: f.opacity, offset: i / (a.length - 1) }));
+      cast = [{ opacity: 0 }, { opacity: .35, offset: .5 }, { opacity: .55, offset: .9 }, { opacity: 0 }];
+    }
+    const o = { duration: FLIP_MS, easing: ease, fill: "both" };
+    anims.push(leaf.animate(k, o));
+    anims.push(leaf.querySelector(".g-shade").animate(shade, o));
+    leaf.querySelectorAll(".g-face").forEach(f => anims.push(f.animate(fade, o)));
+    anims.push(under.querySelector(".g-shade").animate(cast.map(f => ({ ...f, background: "linear-gradient(90deg,rgba(20,15,5,.4),rgba(20,15,5,.05) 75%,rgba(20,15,5,0))" })), o));
+    done = () => {
+      leaf.classList.remove("is-leaf"); under.classList.remove("is-under");
+      content.classList.remove("is-turning");
+    };
+  }
+  const t = { anims, done };
+  turning = t;
+  anims[0].finished.then(() => { if (turning === t) endTurn(); }, () => {});
+}
+
 function show(id, opts = {}) {
   const art = chapters.find(a => a.id === id) || chapters[0];
+  const prev = current;
   current = art;
-  chapters.forEach(a => { a.hidden = a !== art; });
+  if (prev !== art) {
+    endTurn();
+    chapters.forEach(a => { a.classList.toggle("is-cur", a === art); a.removeAttribute("hidden"); });
+    art.querySelector(".g-scroll").scrollTop = 0;
+    if (prev && opts.animate !== false) turnPage(prev, art, chapters.indexOf(art) > chapters.indexOf(prev) ? 1 : -1);
+  }
   const cat = art.dataset.cat;
   tabs.forEach(a => {
     const on = a.dataset.cat === cat;
@@ -97,12 +163,16 @@ function show(id, opts = {}) {
   const activeTab = tabs.find(a => a.dataset.cat === cat);
   if (activeTab) activeTab.scrollIntoView({ block: "nearest", inline: "nearest" });
   const sel = document.querySelector(".g-ch.is-sel");
-  if (sel && matchMedia("(max-width:900px)").matches) sel.scrollIntoView({ block: "nearest", inline: "center" });
+  if (sel && matchMedia("(max-width:900px)").matches) {
+    const list = sel.closest(".g-list");
+    const r = sel.getBoundingClientRect(), lr = list.getBoundingClientRect();
+    list.scrollLeft += (r.left + r.width / 2) - (lr.left + lr.width / 2);
+  }
   updateTitle();
   if (opts.focus) {
     const h = art.querySelector("h2");
-    const top = document.querySelector(".g-page").getBoundingClientRect().top + scrollY - 70;
-    if (scrollY > top) scrollTo({ top, behavior: "auto" });
+    const top = document.querySelector(".g-page").getBoundingClientRect().top + scrollY - document.querySelector(".tabs").offsetHeight;
+    if (scrollY > top + 1) scrollTo({ top, behavior: "auto" });
     h.focus({ preventScroll: true });
   }
 }
@@ -154,7 +224,6 @@ document.querySelectorAll(".lang-toggle button").forEach(b =>
 // ---- theme + background video (same clips and saved choice as the main page) ----
 const CLIP_COUNT = 5;
 const THEME_COLOR = { dark: "#1f3326", light: "#36553c" };
-const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
 const bgEl = document.getElementById("bg");
 let bg = window.__bg || { theme: root.dataset.theme || "dark", n: 1 };
 
@@ -202,6 +271,6 @@ reduceMotion.addEventListener("change", renderBackground);
 
 applyTheme(bg.theme, false);
 renderBackground();
-show(location.hash.slice(1));
+show(location.hash.slice(1), { animate: false });
 setLang(lang, false);
 if (chapters.some(c => c.id === location.hash.slice(1))) history.replaceState({ id: current.id }, "", location.href);
