@@ -14,7 +14,7 @@ const DISCORD = "https://discord.gg/72c42Teq3A";
 // Japanese below. Terminology follows doc/guide-ja.md in the repo.
 // ---------------------------------------------------------------------
 const JA = {
-  title: "Moonshine — スーパーマリオサンシャイン練習mod",
+  title: "Moonshine：スーパーマリオサンシャイン練習mod",
   tagline: "スーパーマリオサンシャインの練習用mod",
   sub: "Nintendont経由のWii実機でエミュレーターのようなステート、GCT generatorの練習コードを内蔵、ILシステム、ゴーストなど多数の機能を搭載。<strong>日本版1.0</strong>・<strong>北米版</strong>・<strong>欧州版</strong>に対応。",
   dlMain: "Wii版をダウンロード",
@@ -26,16 +26,16 @@ const JA = {
   chooseH: "ダウンロードを選ぶ",
   chooseLead: "Wii実機は<strong>Launcher</strong>のZIP、Dolphinは<strong>Dolphin</strong>のZIPを選んでください。メニューの言語はゲームの地域ではなく、ダウンロードの種類で決まります。",
   c1tag: "Wii",
-  c1h: "ランチャー — 英語メニュー",
+  c1h: "ランチャー <span class=\"h-sub\">英語メニュー</span>",
   c1p: "Homebrew Channel用。日本・北米・欧州版に対応。すべて英語で表示します。",
   c2tag: "Wii · おすすめ",
-  c2h: "ランチャー — 日本語メニュー",
+  c2h: "ランチャー <span class=\"h-sub\">日本語メニュー</span>",
   c2p: "日本・北米・欧州版に対応。ランチャーは日本語、ゲーム内メニューは日本版で日本語、北米・欧州版では英語です。",
   c3tag: "Dolphin",
-  c3h: "Dolphin — 英語メニュー",
+  c3h: "Dolphin <span class=\"h-sub\">英語メニュー</span>",
   c3p: "自分で用意したクリーンなISO用のBPSパッチ。日本・北米・欧州版に対応。",
   c4tag: "Dolphin · 日本語",
-  c4h: "Dolphin — 日本語メニュー",
+  c4h: "Dolphin <span class=\"h-sub\">日本語メニュー</span>",
   c4p: "日本版のクリーンなISO用のBPSパッチ。日本語メニューです。",
   allFiles: "すべてのファイルは<a href=\"https://github.com/panther03/moonshine/releases\">GitHub Releases</a>から直接配布されています。",
   notes: "リリースノートを読む →",
@@ -53,13 +53,13 @@ const JA = {
   dolNote: "SDステートとTASファイルのメニューにはWiiランチャーが必要です。Dolphinではメモリ内の3スロットを使えます。",
   warn: "Geckoコードを有効にしたままMoonshineを使うことは強くおすすめしません。Moonshineの機能を壊すか、逆に壊される原因になります。ゲームキューブ実機には対応していません。",
   featH: "主な機能",
-  f1: "<strong>ステート</strong> — 圧縮された3つのスロット。Wiiでは名前を付けてSDに保存できます。",
+  f1: "圧縮された3つのスロットを使える<strong>ステート</strong>。Wiiでは名前を付けてSDにも保存できます。",
   f2: "<strong>コマ送り・フリーカメラ</strong>とTASプロジェクト。",
-  f3: "<strong>練習コードを内蔵</strong> — タイマー、メタデータ、入力表示、レベルセレクト、ワープホイールなど。",
-  f4: "<strong>ILシステム</strong> — ステージごとのPB、PB更新時のファンファーレ、Any%のドルピックタウン区間。ワープ一覧としても使えます。",
+  f3: "タイマー、メタデータ、入力表示、レベルセレクト、ワープホイールなどの<strong>練習コードを内蔵</strong>。",
+  f4: "ステージごとのPB、PB更新時のファンファーレ、Any%のドルピックタウン区間に対応した<strong>ILシステム</strong>。ワープ一覧としても使えます。",
   f5: "<strong>ゴースト</strong>と競走できます。",
-  f6: "<strong>自由にカスタマイズ</strong> — ボタン割り当てや、HUD要素の文字・位置・色・大きさ。",
-  guides: "AIの力を借りて作られたソフトウェアです。自己責任でご利用ください。詳しくは<a href=\"https://github.com/panther03/moonshine/blob/main/doc/guide-ja.md\">日本語ガイド</a> · <a href=\"https://github.com/panther03/moonshine/blob/main/doc/guide-en.md\">English guide</a>へ。",
+  f6: "ボタン割り当てからHUD要素の文字・位置・色・大きさまで、<strong>ほぼすべてをカスタマイズ可能</strong>。",
+  guides: "AIの力を借りて作られたソフトウェアです。自己責任でご利用ください。ガイド：<a href=\"https://github.com/panther03/moonshine/blob/main/doc/guide-ja.md\">日本語</a> · <a href=\"https://github.com/panther03/moonshine/blob/main/doc/guide-en.md\">English</a>",
   allReleases: "すべてのリリース",
   legal: "Moonshineはファンが制作したmodです。スーパーマリオサンシャインは© Nintendoです。ゲーム本体はご自身でご用意ください。",
   soonTitle: "トレーラー近日公開",
@@ -67,7 +67,10 @@ const JA = {
   menusEn: "英語メニュー",
   menusJa: "日本語メニュー",
   latestLine: (name, date) => `最新版：${name} · ${date}公開`,
-  offline: `GitHubに接続できませんでした — <a href="${FALLBACK}">最新リリースを開く</a>。`,
+  offline: `GitHubに接続できませんでした。<a href="${FALLBACK}">最新リリースのページ</a>から直接ダウンロードできます。`,
+  themeGroup: "テーマ",
+  themeLight: "ライトテーマ",
+  themeDark: "ダークテーマ",
 };
 const EN_EXTRA = {
   title: document.title,
@@ -76,7 +79,10 @@ const EN_EXTRA = {
   menusEn: "English menus",
   menusJa: "Japanese menus",
   latestLine: (name, date) => `Latest: ${name} · released ${date}`,
-  offline: `Couldn't reach GitHub — <a href="${FALLBACK}">open the latest release</a>.`,
+  offline: `Couldn't reach GitHub. You can still download from the <a href="${FALLBACK}">latest release page</a>.`,
+  themeGroup: "Theme",
+  themeLight: "Light theme",
+  themeDark: "Dark theme",
 };
 
 const EN = { ...EN_EXTRA };
@@ -103,6 +109,8 @@ function setLang(l, remember) {
     const v = t(el.dataset.i18n);
     if (typeof v === "string") el.innerHTML = v;
   });
+  document.querySelectorAll("[data-i18n-aria]").forEach(el => el.setAttribute("aria-label", t(el.dataset.i18nAria)));
+  document.querySelectorAll("[data-i18n-title]").forEach(el => el.setAttribute("title", t(el.dataset.i18nTitle)));
   document.querySelectorAll(".lang-toggle button").forEach(b =>
     b.setAttribute("aria-pressed", String(b.dataset.lang === l)));
   if (remember) {
@@ -169,6 +177,68 @@ function renderRelease() {
 document.querySelectorAll(".lang-toggle button").forEach(b =>
   b.addEventListener("click", () => setLang(b.dataset.lang, true)));
 setLang(pickLang(), false);
+
+// ---------------------------------------------------------------------
+// Theme + background video. The inline script in <head> already chose
+// the theme and a clip number (window.__bg) and set the poster.
+// Clips live in assets/bg/{light,dark}-{1..5}.{mp4,webm,jpg}.
+// ---------------------------------------------------------------------
+const CLIP_COUNT = 5;
+const THEME_COLOR = { dark: "#0b2a4a", light: "#8fd3ff" };
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
+const bgEl = document.getElementById("bg");
+let bg = window.__bg || { theme: document.documentElement.dataset.theme || "dark", n: 1 };
+
+function randomClip(exclude) {
+  let n;
+  do { n = 1 + Math.floor(Math.random() * CLIP_COUNT); } while (CLIP_COUNT > 1 && n === exclude);
+  return n;
+}
+
+function renderBackground() {
+  const base = `assets/bg/${bg.theme}-${bg.n}`;
+  document.documentElement.style.setProperty("--poster", `url(${base}.jpg)`);
+  bgEl.querySelectorAll("video").forEach(v => { v.pause(); v.removeAttribute("src"); v.load(); v.remove(); });
+  const saveData = navigator.connection && navigator.connection.saveData;
+  if (reduceMotion.matches || saveData) return; // poster only
+  const v = document.createElement("video");
+  v.muted = true; v.defaultMuted = true; v.loop = true; v.autoplay = true; v.playsInline = true;
+  v.setAttribute("muted", ""); v.setAttribute("playsinline", ""); v.setAttribute("disablepictureinpicture", "");
+  v.preload = "auto"; v.tabIndex = -1;
+  v.poster = `${base}.jpg`;
+  for (const [ext, type] of [["webm", 'video/webm; codecs="vp9"'], ["mp4", "video/mp4"]]) {
+    const s = document.createElement("source");
+    s.src = `${base}.${ext}`; s.type = type; v.appendChild(s);
+  }
+  v.addEventListener("playing", () => v.classList.add("on"), { once: true });
+  bgEl.appendChild(v);
+  const p = v.play(); if (p) p.catch(() => {});
+}
+
+function applyTheme(theme, remember) {
+  const changed = theme !== bg.theme;
+  document.documentElement.dataset.theme = theme;
+  document.querySelector('meta[name="theme-color"]').content = THEME_COLOR[theme];
+  document.querySelectorAll(".theme-toggle button").forEach(b =>
+    b.setAttribute("aria-pressed", String(b.dataset.themeSet === theme)));
+  if (remember) { try { localStorage.setItem("theme", theme); } catch (e) {} }
+  if (changed) { bg = { theme, n: randomClip() }; }
+  return changed;
+}
+
+document.querySelectorAll(".theme-toggle button").forEach(b =>
+  b.addEventListener("click", () => { if (applyTheme(b.dataset.themeSet, true)) renderBackground(); }));
+
+// Follow the OS setting live until the visitor picks a theme themselves.
+matchMedia("(prefers-color-scheme: light)").addEventListener("change", e => {
+  let saved = null; try { saved = localStorage.getItem("theme"); } catch (err) {}
+  if (saved || new URLSearchParams(location.search).get("theme")) return;
+  if (applyTheme(e.matches ? "light" : "dark", false)) renderBackground();
+});
+reduceMotion.addEventListener("change", renderBackground);
+
+applyTheme(bg.theme, false);
+renderBackground();
 
 (async function fetchRelease() {
   try {

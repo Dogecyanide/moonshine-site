@@ -3,19 +3,40 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Moonshine — Super Mario Sunshine practice mod</title>
+  <title>Moonshine: a Super Mario Sunshine practice mod</title>
   <meta name="description" content="Moonshine is a Super Mario Sunshine practice mod: savestates on Wii through Nintendont, integrated practice codes, IL system, ghosts and more. Supports JP 1.0, US and PAL.">
-  <meta property="og:title" content="Moonshine — Super Mario Sunshine practice mod">
+  <meta property="og:title" content="Moonshine: a Super Mario Sunshine practice mod">
   <meta property="og:description" content="Savestates on Wii, integrated practice codes, IL timing, ghosts and more. JP 1.0, US and PAL.">
   <meta property="og:image" content="assets/showcase.webp">
   <meta name="theme-color" content="#0b2a4a">
   <link rel="icon" href="assets/icon.png">
   <link rel="stylesheet" href="style.css">
+  <script>
+    // Pick theme and background clip before first paint so the poster shows instantly.
+    (function () {
+      var d = document.documentElement, t = null, q = new URLSearchParams(location.search).get("theme");
+      if (q === "light" || q === "dark") t = q;
+      else { try { t = localStorage.getItem("theme"); } catch (e) {} }
+      if (t !== "light" && t !== "dark") t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      var n = 1 + Math.floor(Math.random() * 5);
+      d.dataset.theme = t;
+      d.style.setProperty("--poster", "url(assets/bg/" + t + "-" + n + ".jpg)");
+      window.__bg = { theme: t, n: n };
+    })();
+  </script>
 </head>
 <body>
-  <div class="lang-toggle" role="group" aria-label="Language / 言語">
-    <button type="button" data-lang="en" aria-pressed="true" lang="en">EN</button>
-    <button type="button" data-lang="ja" aria-pressed="false" lang="ja">日本語</button>
+  <div id="bg" class="bg" aria-hidden="true"></div>
+
+  <div class="top-controls">
+    <div class="toggle theme-toggle" role="group" aria-label="Theme" data-i18n-aria="themeGroup">
+      <button type="button" data-theme-set="light" aria-pressed="false" aria-label="Light theme" data-i18n-aria="themeLight" title="Light theme" data-i18n-title="themeLight">☀&#xFE0E;</button>
+      <button type="button" data-theme-set="dark" aria-pressed="false" aria-label="Dark theme" data-i18n-aria="themeDark" title="Dark theme" data-i18n-title="themeDark">☾&#xFE0E;</button>
+    </div>
+    <div class="toggle lang-toggle" role="group" aria-label="Language / 言語">
+      <button type="button" data-lang="en" aria-pressed="true" lang="en">EN</button>
+      <button type="button" data-lang="ja" aria-pressed="false" lang="ja">日本語</button>
+    </div>
   </div>
 
   <header class="hero">
@@ -36,7 +57,6 @@
       </div>
       <p id="release-info" class="release-info" data-i18n="fetching">Fetching latest release…</p>
     </div>
-    <div class="waves" aria-hidden="true"></div>
   </header>
 
   <main>
@@ -51,25 +71,25 @@
       <div class="cards">
         <a class="card dl" data-asset="ENGLISH-MENUS_Launcher" href="https://github.com/panther03/moonshine/releases/latest">
           <span class="tag" data-i18n="c1tag">Wii · Recommended</span>
-          <h3 data-i18n="c1h">Launcher — English menus</h3>
+          <h3 data-i18n="c1h">Launcher <span class="h-sub">English menus</span></h3>
           <p data-i18n="c1p">For the Homebrew Channel. US, PAL and JP. English throughout.</p>
           <span class="file" data-i18n="latestRelease">Latest release</span>
         </a>
         <a class="card dl" data-asset="JAPANESE-MENUS_Launcher" href="https://github.com/panther03/moonshine/releases/latest">
           <span class="tag" data-i18n="c2tag">Wii · 日本語</span>
-          <h3 data-i18n="c2h">Launcher — Japanese menus</h3>
+          <h3 data-i18n="c2h">Launcher <span class="h-sub">Japanese menus</span></h3>
           <p data-i18n="c2p">US, PAL and JP. Japanese launcher; Japanese in-game menus on JP, English on US/PAL.</p>
           <span class="file" data-i18n="latestRelease">Latest release</span>
         </a>
         <a class="card dl" data-asset="ENGLISH-MENUS_Dolphin" href="https://github.com/panther03/moonshine/releases/latest">
           <span class="tag" data-i18n="c3tag">Dolphin</span>
-          <h3 data-i18n="c3h">Dolphin — English menus</h3>
+          <h3 data-i18n="c3h">Dolphin <span class="h-sub">English menus</span></h3>
           <p data-i18n="c3p">BPS patches for your own clean ISO. US, PAL and JP.</p>
           <span class="file" data-i18n="latestRelease">Latest release</span>
         </a>
         <a class="card dl" data-asset="JAPANESE-MENUS_Dolphin" href="https://github.com/panther03/moonshine/releases/latest">
           <span class="tag" data-i18n="c4tag">Dolphin · 日本語</span>
-          <h3 data-i18n="c4h">Dolphin — Japanese menus</h3>
+          <h3 data-i18n="c4h">Dolphin <span class="h-sub">Japanese menus</span></h3>
           <p data-i18n="c4p">BPS patch for your own clean JP ISO. Japanese menus.</p>
           <span class="file" data-i18n="latestRelease">Latest release</span>
         </a>
@@ -100,7 +120,7 @@
           <p class="note" data-i18n="dolNote">SD state and TAS file menus need the Wii launcher; Dolphin has three memory slots.</p>
         </div>
       </div>
-      <p class="warn" data-i18n="warn">We strongly advise against running Moonshine with Gecko codes enabled — they will either break or be broken by Moonshine's features. GameCube hardware is not supported.</p>
+      <p class="warn" data-i18n="warn">We strongly advise against running Moonshine with Gecko codes enabled. They will either break Moonshine's features or be broken by them. GameCube hardware is not supported.</p>
     </section>
 
     <section class="wrap" id="features">
@@ -109,14 +129,14 @@
         <img src="assets/showcase.webp" alt="Moonshine menus and practice features" width="2560" height="960">
       </figure>
       <ul class="features">
-        <li data-i18n="f1"><strong>Savestates</strong> — three compressed slots, with named SD states on Wii.</li>
+        <li data-i18n="f1"><strong>Savestates</strong> with three compressed slots, plus named SD states on Wii.</li>
         <li data-i18n="f2"><strong>Frame advance, free camera</strong> and TAS projects.</li>
-        <li data-i18n="f3"><strong>Practice codes built in</strong> — timer, metadata, input display, level select, warp wheel and more.</li>
-        <li data-i18n="f4"><strong>IL system</strong> — per-level PBs, a PB fanfare and Any% plaza segments, doubling as a warp list.</li>
+        <li data-i18n="f3"><strong>Practice codes built in:</strong> timer, metadata, input display, level select, warp wheel and more.</li>
+        <li data-i18n="f4"><strong>IL system</strong> with per-level PBs, a PB fanfare and Any% plaza segments. It doubles as a warp list.</li>
         <li data-i18n="f5"><strong>Ghosts</strong> to race against.</li>
-        <li data-i18n="f6"><strong>Configurable everything</strong> — button binds, and the text, position, colour and size of HUD elements.</li>
+        <li data-i18n="f6"><strong>Nearly everything is configurable</strong>, from button binds to the text, position, colour and size of HUD elements.</li>
       </ul>
-      <p class="small" data-i18n="guides">Vibe-coded software — use at your own risk. See the <a href="https://github.com/panther03/moonshine/blob/main/doc/guide-en.md">English guide</a> · <a href="https://github.com/panther03/moonshine/blob/main/doc/guide-ja.md">日本語ガイド</a>.</p>
+      <p class="small" data-i18n="guides">This is vibe-coded software, so use it at your own risk. Guides: <a href="https://github.com/panther03/moonshine/blob/main/doc/guide-en.md">English</a> · <a href="https://github.com/panther03/moonshine/blob/main/doc/guide-ja.md">日本語</a></p>
     </section>
   </main>
 
