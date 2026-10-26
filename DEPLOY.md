@@ -51,3 +51,11 @@ To point at a different repo, change `REPO` in `main.js` and the hard-coded link
 
 ## Local preview
 `python3 -m http.server 8000` in this folder, then open http://localhost:8000.
+
+## Menu theme assets
+
+The look copies Moonshine's in-game "Delfino guidebook" menu (`src/menu_theme.cpp`, `include/susamune/menu_palette.h`).
+
+- `assets/menu/`: paper tiles tinted from `guide_back`, the MOONSHINE heading decoded from `src/menu_subtitle_title.cpp`, and two-frame sprite strips (palm, fish, ship, gloved hand, tab icons) built from the menu's artwork, which is extracted from Super Mario Sunshine (© Nintendo). `tab-pad.png` frame 2 is Moonshine's own `controller-pose2` icon.
+- Frames swap with CSS `steps()` at the menu's cadence (about 0.75 s per pose, 0.375 s for the hand) and hold still under `prefers-reduced-motion`.
+- `assets/fonts/`: M PLUS Rounded 1c (Medium, ExtraBold), subset to the characters the site uses. SIL Open Font License 1.1, see `assets/fonts/OFL.txt`.

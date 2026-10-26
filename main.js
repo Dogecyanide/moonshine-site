@@ -71,6 +71,16 @@ const JA = {
   themeGroup: "テーマ",
   themeLight: "ライトテーマ",
   themeDark: "ダークテーマ",
+  skip: "ダウンロードへ移動",
+  tabTrailer: "トレーラー",
+  tabDownload: "ダウンロード",
+  tabInstall: "導入方法",
+  tabFeatures: "機能",
+  toTop: "トップへ戻る",
+  tabsLabel: "セクション",
+  prevSection: "前のセクション",
+  nextSection: "次のセクション",
+  linksLabel: "リンク",
 };
 const EN_EXTRA = {
   title: document.title,
@@ -83,6 +93,10 @@ const EN_EXTRA = {
   themeGroup: "Theme",
   themeLight: "Light theme",
   themeDark: "Dark theme",
+  tabsLabel: "Sections",
+  prevSection: "Previous section",
+  nextSection: "Next section",
+  linksLabel: "Links",
 };
 
 const EN = { ...EN_EXTRA };
@@ -118,6 +132,8 @@ function setLang(l, remember) {
     const u = new URL(location.href);
     if (u.searchParams.has("lang")) { u.searchParams.set("lang", l); history.replaceState(null, "", u); }
   }
+  // The menu keeps one row selected: the recommended launcher for this language.
+  document.querySelectorAll(".row.dl").forEach((r, i) => r.classList.toggle("is-default", i === (l === "ja" ? 1 : 0)));
   renderTrailer();
   renderRelease();
 }
@@ -184,7 +200,7 @@ setLang(pickLang(), false);
 // Clips live in assets/bg/{light,dark}-{1..5}.{mp4,webm,jpg}.
 // ---------------------------------------------------------------------
 const CLIP_COUNT = 5;
-const THEME_COLOR = { dark: "#0b2a4a", light: "#8fd3ff" };
+const THEME_COLOR = { dark: "#1f3326", light: "#36553c" };
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
 const bgEl = document.getElementById("bg");
 let bg = window.__bg || { theme: document.documentElement.dataset.theme || "dark", n: 1 };
@@ -250,3 +266,45 @@ renderBackground();
   }
   renderRelease();
 })();
+
+// ---------------------------------------------------------------------
+// Tab strip: highlight the section in view, L/R step between sections.
+// ---------------------------------------------------------------------
+const tabs = [...document.querySelectorAll(".tab")];
+const tabSections = tabs.map(a => document.querySelector(a.getAttribute("href")));
+let activeTab = -1;
+function setTab(i) {
+  if (i === activeTab) return;
+  activeTab = i;
+  tabs.forEach((a, j) => {
+    a.classList.toggle("is-active", j === i);
+    if (j === i) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
+  });
+  const a = tabs[i];
+  if (a) {
+    const list = a.parentElement;
+    const l = a.offsetLeft - list.offsetLeft, r = l + a.offsetWidth;
+    if (l < list.scrollLeft || r > list.scrollLeft + list.clientWidth)
+      list.scrollTo({ left: l - 8, behavior: reduceMotion.matches ? "auto" : "smooth" });
+  }
+}
+function updateTab() {
+  const nav = document.querySelector(".tabs");
+  const line = nav.getBoundingClientRect().bottom + 24;
+  let i = 0;
+  tabSections.forEach((sec, j) => { if (sec && sec.getBoundingClientRect().top <= line) i = j; });
+  if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) i = tabs.length - 1;
+  setTab(i);
+}
+let tabTick = false;
+addEventListener("scroll", () => {
+  if (tabTick) return; tabTick = true;
+  requestAnimationFrame(() => { tabTick = false; updateTab(); });
+}, { passive: true });
+addEventListener("resize", updateTab);
+updateTab();
+document.querySelectorAll(".shoulder").forEach(b => b.addEventListener("click", () => {
+  const i = Math.max(0, Math.min(tabs.length - 1, activeTab + Number(b.dataset.step)));
+  tabSections[i].scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth" });
+  setTab(i);
+}));
