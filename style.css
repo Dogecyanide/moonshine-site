@@ -6,7 +6,7 @@
   --tag-bg:#ffc5312e; --tag-ink:#ffc531; --code:#00000059; --warn-bg:rgba(60,30,8,.72);
   --toggle-bg:#0b2a4acc; --toggle-line:#ffffff33; --shadow:#0006; --glow:#ffb84d40; --text-shadow:0 2px 12px #000a;
   --bg-fallback:#0b2a4a;
-  --scrim:radial-gradient(120% 90% at 50% 20%,rgba(5,20,38,.42),rgba(4,16,30,.62));
+  --scrim:radial-gradient(120% 90% at 50% 20%,rgba(5,20,38,.5),rgba(4,16,30,.62));
   --content-scrim:rgba(5,20,38,.5);
   color-scheme:dark;
 }
@@ -16,7 +16,7 @@
   --tag-bg:#ff8a1f26; --tag-ink:#9a4300; --code:#0d2c4a14; --warn-bg:rgba(255,239,214,.92);
   --toggle-bg:#ffffffd9; --toggle-line:#0d2c4a26; --shadow:#0d2c4a33; --glow:#fff1b080; --text-shadow:0 1px 14px #fffc;
   --bg-fallback:#bfe6ff;
-  --scrim:radial-gradient(120% 90% at 50% 20%,rgba(255,250,230,.34),rgba(255,250,238,.5));
+  --scrim:radial-gradient(120% 90% at 50% 20%,rgba(255,250,230,.42),rgba(255,250,238,.5));
   --content-scrim:rgba(255,252,244,.6);
   color-scheme:light;
 }
