@@ -196,9 +196,6 @@ p.small.help{margin-top:18px}
 .prompts a{display:inline-flex;align-items:center;gap:8px;color:var(--value);font-weight:800;text-decoration:none;padding:4px 2px}
 .prompts a:hover{text-decoration:underline}
 .prompts .to-top{margin-left:auto}
-.glyph{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;font-size:.8rem;font-weight:800;color:#fff;background:#1ea35b;box-shadow:inset 0 -2px 0 rgba(0,0,0,.25)}
-.glyph-y{background:#b8b2a6;border-radius:45% 55% 50% 50%/55% 55% 45% 45%;color:#413019}
-.glyph-z{background:#6a4dc4!important;border-radius:6px!important;width:30px!important;height:20px!important}
 .legal{margin:6px 0 0;color:var(--muted);font-size:.8rem}
 
 /* ---- responsive ---- */
@@ -247,9 +244,6 @@ p.small.help{margin-top:18px}
    All features page (features.html). Chapter list on the left with the
    hand cursor, one chapter at a time on the right, help box underneath.
    ====================================================================== */
-.glyph-a{background:#1ea35b}
-.glyph-b{background:#d8382c;width:22px;height:22px}
-.glyph-x{background:#9b958a;border-radius:45% 55% 50% 50%/55% 55% 45% 45%}
 :root[lang="ja"] .l-en,:root:not([lang="ja"]) .l-ja{display:none!important}
 
 .g-wm{margin:0;line-height:0}
@@ -318,18 +312,23 @@ p.small.help{margin-top:18px}
 .js .g-side{min-height:0;overflow:hidden}
 .js .g-side-inner{position:static;max-height:100%;height:100%}
 .js .g-content{position:relative;min-height:0;padding:0}
-.js .g-stage{position:absolute;inset:0;perspective:2600px;perspective-origin:20% 50%}
-.js .g-chapter{display:none;position:absolute;inset:0;margin:0;transform-style:preserve-3d;transform-origin:0 50%}
+.js .g-stage{position:absolute;inset:0}
+/* 3D only while a page is turning: a resting scroller inside a 3D context does not get wheel scrolling in Chrome */
+.js .g-content.is-turning .g-stage{perspective:2600px;perspective-origin:20% 50%}
+.js .g-chapter{display:none;position:absolute;inset:0;margin:0;transform-origin:0 50%}
+.js .is-turning .g-chapter{transform-style:preserve-3d}
 .js .g-chapter.is-cur,.js .g-chapter.is-leaf,.js .g-chapter.is-under{display:block}
 .js .g-chapter.is-cur{z-index:2}
 .js .g-chapter.is-under{z-index:1}
 .js .g-chapter.is-leaf{z-index:3}
-.js .g-face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;
+.js .g-face{position:absolute;inset:0;
   background:linear-gradient(90deg,rgba(60,40,10,.16),rgba(60,40,10,0) 26px),var(--paper) var(--paper-img) 0 0/64px 64px}
 [data-theme="dark"].js .g-face{background:linear-gradient(90deg,rgba(0,0,0,.28),rgba(0,0,0,0) 26px),var(--paper) var(--paper-img) 0 0/64px 64px}
-.js .g-back{display:block;transform:rotateY(180deg);
+.js .is-turning .g-face{-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.js .g-back{display:none;transform:rotateY(180deg);
   background:linear-gradient(270deg,rgba(60,40,10,.22),rgba(60,40,10,0) 40px),linear-gradient(90deg,rgba(255,250,225,.18),rgba(0,0,0,.08)),var(--paper) var(--paper-img) 0 0/64px 64px;
   box-shadow:inset 0 0 0 1px var(--rule)}
+.js .is-turning .g-back{display:block}
 .js .g-scroll{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;padding:22px 34px 46px 40px;
   scrollbar-width:thin;scrollbar-color:var(--trim) transparent}
 .js .g-scroll::-webkit-scrollbar{width:10px}
@@ -375,3 +374,27 @@ p.small.help{margin-top:18px}
   .g-ch::before{animation:none!important;background-position:0 0!important}
   .g-chapter h2 .sprite{animation:none!important;background-position:0 0!important;transform:none!important}
 }
+
+/* GameCube face buttons, drawn like the real controller (A big green, B small red, X/Y grey kidney beans, Z purple, L/R grey shoulders) */
+.glyph,.g-body kbd.gc{display:inline-block;vertical-align:middle;padding:0;border:0;border-radius:0;box-shadow:none;min-width:0;
+  color:transparent;font-size:inherit;line-height:1;text-indent:-99em;overflow:hidden;white-space:nowrap;background-color:transparent;background-position:center;background-size:contain;background-repeat:no-repeat;filter:drop-shadow(0 1px 0 rgba(0,0,0,.25))}
+.glyph{width:28px;height:28px}
+.glyph-a,.g-body kbd.gc-a{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%233fcf7c'/%3E%3Cstop offset='1' stop-color='%2314874a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='15' fill='url(%23g)' stroke='%230c5e33' stroke-width='1.5'/%3E%3Cellipse cx='12' cy='9' rx='6' ry='3' fill='%23fff' opacity='.28'/%3E%3Ctext x='16' y='21.5' font-size='15' fill='%23fff' font-family='Trebuchet MS,Arial,sans-serif' font-weight='800' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E")}
+.glyph-b,.g-body kbd.gc-b{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23f05a4c'/%3E%3Cstop offset='1' stop-color='%23b8241a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='13' cy='13' r='12' fill='url(%23g)' stroke='%237d140d' stroke-width='1.5'/%3E%3Cellipse cx='10' cy='7.5' rx='5' ry='2.4' fill='%23fff' opacity='.28'/%3E%3Ctext x='13' y='17.5' font-size='12.5' fill='%23fff' font-family='Trebuchet MS,Arial,sans-serif' font-weight='800' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E")}
+.glyph-x,.g-body kbd.gc-x{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 23 34'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23eeebe5'/%3E%3Cstop offset='1' stop-color='%23b4afa6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M6,1.5 C16,0 22,8 21,17 C22,26 16,34 6,32.5 C2.5,32 1.5,28.5 4,26 C7.5,22.5 9,20 9,17 C9,14 7.5,11.5 4,8 C1.5,5.5 2.5,2 6,1.5 Z' fill='url(%23g)' stroke='%236f6a61' stroke-width='1.3'/%3E%3Ctext x='15' y='21' font-size='10.5' fill='%234a453d' font-family='Trebuchet MS,Arial,sans-serif' font-weight='800' text-anchor='middle'%3EX%3C/text%3E%3C/svg%3E")}
+.glyph-y,.g-body kbd.gc-y{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 22'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23eeebe5'/%3E%3Cstop offset='1' stop-color='%23b4afa6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M1.5,16 C0,6 8,0 17,1 C26,0 34,6 32.5,16 C32,19.5 28.5,20.5 26,18 C22.5,14.5 20,13 17,13 C14,13 11.5,14.5 8,18 C5.5,20.5 2,19.5 1.5,16 Z' fill='url(%23g)' stroke='%236f6a61' stroke-width='1.3'/%3E%3Ctext x='17' y='10.8' font-size='10.5' fill='%234a453d' font-family='Trebuchet MS,Arial,sans-serif' font-weight='800' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E")}
+.glyph-z,.g-body kbd.gc-z{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 20'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%238d72e6'/%3E%3Cstop offset='1' stop-color='%235338a8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='1' y='1' width='32' height='18' rx='4' fill='url(%23g)' stroke='%2333206e' stroke-width='1.4'/%3E%3Crect x='4' y='3' width='26' height='3' rx='1.5' fill='%23fff' opacity='.25'/%3E%3Ctext x='17' y='14.6' font-size='11.5' fill='%23fff' font-family='Trebuchet MS,Arial,sans-serif' font-weight='800' text-anchor='middle'%3EZ%3C/text%3E%3C/svg%3E")}
+.g-body kbd.gc-l{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 22'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23e7e4de'/%3E%3Cstop offset='1' stop-color='%23a29d94'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M2,20.5 L2,10 C2,4.5 8,1.5 17,1.5 C26,1.5 32,4.5 32,10 L32,20.5 Z' fill='url(%23g)' stroke='%23625d55' stroke-width='1.3'/%3E%3Ctext x='17' y='16' font-size='11' fill='%233e3a33' font-family='Trebuchet MS,Arial,sans-serif' font-weight='800' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E")}
+.g-body kbd.gc-r{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 22'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23e7e4de'/%3E%3Cstop offset='1' stop-color='%23a29d94'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M2,20.5 L2,10 C2,4.5 8,1.5 17,1.5 C26,1.5 32,4.5 32,10 L32,20.5 Z' fill='url(%23g)' stroke='%23625d55' stroke-width='1.3'/%3E%3Ctext x='17' y='16' font-size='11' fill='%233e3a33' font-family='Trebuchet MS,Arial,sans-serif' font-weight='800' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E")}
+.glyph.glyph-a{width:28px;height:28px}
+.glyph.glyph-b{width:22px;height:22px}
+.glyph.glyph-x{width:19px;height:28px}
+.glyph.glyph-y{width:30px;height:20px}
+.glyph.glyph-z{width:32px;height:19px}
+.g-body kbd.gc{margin:0 1px}
+.g-body kbd.gc-a{width:1.45em;height:1.45em}
+.g-body kbd.gc-b{width:1.18em;height:1.18em}
+.g-body kbd.gc-x{width:1em;height:1.5em}
+.g-body kbd.gc-y{width:1.55em;height:1em}
+.g-body kbd.gc-z,.g-body kbd.gc-l,.g-body kbd.gc-r{width:1.6em;height:1em}
+.g-table kbd.gc{vertical-align:-.3em}
