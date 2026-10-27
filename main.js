@@ -28,10 +28,10 @@ const JA = {
   chooseH: "ダウンロードを選ぶ",
   chooseLead: "Wii実機は<strong>Launcher</strong>のZIP、Dolphinは<strong>Dolphin</strong>のZIPを選んでください。メニューの言語はゲームの地域ではなく、ダウンロードの種類で決まります。",
   c1tag: "Wii",
-  c1h: "ランチャー <span class=\"h-sub\">英語メニュー</span>",
+  c1h: "English Launcher <span class=\"h-sub\">英語メニュー</span>",
   c1p: "Homebrew Channel用。日本・北米・欧州版に対応。すべて英語で表示します。",
   c2tag: "Wii · おすすめ",
-  c2h: "ランチャー <span class=\"h-sub\">日本語メニュー</span>",
+  c2h: "Nihongo Ranchā <span class=\"h-sub\">日本語メニュー</span>",
   c2p: "日本・北米・欧州版に対応。ランチャーは日本語、ゲーム内メニューは日本版で日本語、北米・欧州版では英語です。",
   c3tag: "Dolphin",
   c3h: "Dolphin <span class=\"h-sub\">英語メニュー</span>",
@@ -43,7 +43,7 @@ const JA = {
   notes: "リリースノートを読む →",
   installH: "インストール",
   wiiH: "Wii（実機）",
-  wii1: "<strong>Launcher</strong>のZIPをダウンロードします。",
+  wii1: "<strong>English Launcher</strong>か<strong>Nihongo Ranchā</strong>のZIPをダウンロードします。",
   wii2: "ZIPの中身をSDカードの一番上にコピーします。<code>apps</code>フォルダーの中に<code>moonshine_launcher</code>フォルダーが入ればOKです。",
   wii3: "Homebrew Channelから起動し、ゲーム版と設定を選んだら、あとは楽しむだけ。",
   wiiNote: "更新する場合は、アプリのファイルを置き換え、ランチャーとmodのファイルは同じZIPのものを使ってください。<code>apps/susamune_launcher</code>が残っている場合は、先に<code>apps/moonshine_launcher</code>へ名前を変更します。設定・記録・ゴースト・ステートは<code>/Moonshine data</code>に保存されます。",
@@ -53,7 +53,7 @@ const JA = {
   dol3: "設定を保存するため、<strong>スロットB</strong>にメモリーカードを挿してください。",
   dol4: "ステートで汚れを正しく保存・読み込みするには、<em>グラフィック設定 → Hacks → Texture Cache Accuracy</em>を<strong>Safe</strong>にします。",
   dolNote: "3.0.0から、DolphinもWiiと同等になりました。すべての機能をどちらでも使えます。",
-  warn: "Geckoコードを有効にしたままMoonshineを使うことは強くおすすめしません。Moonshineの機能を壊すか、逆に壊される原因になります。ゲームキューブ実機には対応していません。",
+  warn: "Geckoコードを有効にしたままMoonshineを使うことは強くおすすめしません。Moonshineの機能を壊すか、逆に壊される原因になります。Wiiでは、ランチャーの Settings で<strong>GCコントローラ直接接続</strong>（Native Controls、Nintendont の Native Control）をオンにしてください（Wii Uにはありません）。ゲームキューブ実機には対応していません。",
   featH: "主な機能",
   f1: "Wiiで3スロット使える<strong>ステート</strong>で、練習を一気に加速。SDカードに保存して後で使うこともできます。",
   f2: "<strong>さらに進化した練習コード</strong>：従来のGeckoコードをすべて移植し、多くを改良しました。タイマー、メタデータ、レベルセレクトなど。",
@@ -208,11 +208,14 @@ function renderRelease() {
   info.textContent = t("latestLine")(rel.name || rel.tag_name, date);
   document.getElementById("notes-link").href = rel.html_url;
 
-  document.querySelectorAll(".dl[data-asset]").forEach(card => {
+  // Download cards on the page, plus the download links in the guidebook (.g-dl).
+  document.querySelectorAll("a[data-asset]").forEach(card => {
     const a = find(card.dataset.asset);
     if (!a) return; // keep fallback link to the release page
     card.href = a.browser_download_url;
-    card.querySelector(".file").textContent = `${rel.tag_name} · ${fmtSize(a.size)}`;
+    const file = card.querySelector(".file");
+    if (file) file.textContent = `${rel.tag_name} · ${fmtSize(a.size)}`;
+    else card.title = `${a.name} (${rel.tag_name}, ${fmtSize(a.size)})`;
   });
 
   // Main button: in Japanese, prefer the Japanese-menus launcher.
