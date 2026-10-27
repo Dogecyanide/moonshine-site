@@ -130,9 +130,8 @@ h2::after{content:"";flex:1;height:2px;background:var(--rule);opacity:.7}
 .release-info{margin:14px 0 0;color:var(--muted);font-size:.9rem}
 
 /* ---- buttons: paper with gold trim; the main one is "selected" teal ---- */
-.cta{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px 16px;align-items:stretch}
-.cta .btn{grid-column:span 2;padding-left:10px;padding-right:10px;text-align:center}
-.cta .btn-primary{grid-column:span 3}
+.cta{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:14px 16px;align-items:stretch}
+.cta .btn{padding-left:10px;padding-right:10px;text-align:center}
 .btn{display:inline-flex;flex-direction:column;justify-content:center;align-items:center;gap:1px;min-height:52px;padding:8px 22px;border-radius:8px;
   font-weight:800;text-decoration:none;color:var(--ink);background:var(--paper-hi);
   box-shadow:0 0 0 2px var(--trim),inset 0 0 0 2px var(--trim-light),3px 4px 0 2px var(--drop);transition:transform .12s,background .12s}
@@ -228,7 +227,7 @@ p.small.help{margin-top:18px}
   :is(.row:hover,.row:focus-visible,.rows:not(:hover):not(:focus-within) .row.is-default)::before{left:-40px;width:34px;height:24px;margin-top:-12px;image-rendering:auto}
   .cols,.features{grid-template-columns:1fr}
   .btn{flex:1 1 100%}
-  .cta{gap:12px}
+  .cta{gap:12px;grid-template-columns:minmax(0,1fr)}
   .cta .btn,.cta .btn-primary{grid-column:1/-1}
   .cta .btn:not(.btn-primary){min-height:46px}
   .prompts .to-top{margin-left:0}
@@ -346,8 +345,6 @@ p.small.help{margin-top:18px}
   background:linear-gradient(90deg,rgba(0,0,0,0) 0,rgba(0,0,0,.1) 55%,rgba(30,20,0,.38) 100%)}
 .js .g-content.is-turning{z-index:5}
 
-/* the buttons on the main page that open the guidebook */
-.btn-guide{margin-top:20px}
 
 @media (max-width:900px){
   .g-page{grid-template-columns:minmax(0,1fr)}
@@ -404,16 +401,6 @@ html.gb-lock{overflow:hidden}
 .gb.is-anim .gb-book{perspective:2600px;perspective-origin:0 320px}
 .gb.is-anim .gb-cover{display:block;position:absolute;z-index:9;left:-30px;top:-10px;bottom:-10px;right:-4px;transform-origin:30px 50%;transform-style:preserve-3d;pointer-events:none}
 .gb-face{position:absolute;inset:0;border-radius:7px 10px 10px 7px;-webkit-backface-visibility:hidden;backface-visibility:hidden}
-.gb-front{overflow:hidden;
-  background:linear-gradient(90deg,rgba(0,0,0,.45) 0,rgba(0,0,0,.2) 26px,rgba(255,240,190,.18) 30px,rgba(0,0,0,.16) 34px,rgba(0,0,0,0) 48px),
-    radial-gradient(130% 70% at 35% 12%,#4c9467,#2b6447 45%,#1b4231 100%);
-  box-shadow:inset 0 0 0 2px #143222,inset 0 0 40px rgba(0,0,0,.35)}
-.gb-front::before{content:"";position:absolute;left:52px;top:22px;right:22px;bottom:22px;border-radius:8px;
-  border:3px solid var(--trim);box-shadow:0 0 0 2px rgba(255,236,162,.35),inset 0 0 0 2px rgba(255,236,162,.35)}
-.gb-front-inner{position:absolute;left:30px;right:0;top:0;height:min(100%,82vh);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center}
-.gb-front .wordmark{width:min(520px,72%);height:auto;filter:drop-shadow(0 3px 0 rgba(0,0,0,.35))}
-.gb-cover-title{font-weight:800;font-size:2.3rem;line-height:1.1;letter-spacing:.14em;color:var(--trim-light);text-shadow:0 2px 0 rgba(60,30,0,.6)}
-.gb-cover-sub{font-weight:800;font-size:.95rem;letter-spacing:.08em;color:#fff3c4;opacity:.85}
 .gb-inside{transform:rotateY(180deg);
   background:linear-gradient(270deg,rgba(40,25,5,.32),rgba(40,25,5,0) 46px),var(--sheet) var(--paper-img) 0 0/64px 64px;
   box-shadow:inset 0 0 0 2px var(--rule)}
@@ -425,12 +412,91 @@ html.gb-lock{overflow:hidden}
 @media (max-width:680px){
   .js .gb{padding:12px 10px 28px 28px}
   .gb.is-anim .gb-cover{left:-20px;transform-origin:20px 50%}
-  .gb-front-inner{left:20px}
-  .gb-front::before{left:34px;top:14px;right:14px;bottom:14px}
-  .gb-cover-title{font-size:1.7rem}
   .gb-close span:last-child{display:none}
   .js .gb-close{padding:5px 7px}
 }
+
+/* ---- the guidebook cover. The same art is the "All features" button, the book that flies up, and the real cover.
+   Sizes use container units so it scales smoothly from the small button to the full book. ---- */
+.gbc{position:absolute;inset:0;display:block;overflow:hidden;border-radius:4px 8px 8px 4px;container-type:inline-size;
+  background:radial-gradient(120% 85% at 40% 30%,rgba(77,150,124,.55),rgba(24,82,68,.55) 52%,rgba(8,38,31,.88)),#1f5446 url(assets/menu/paper-dark.png) 0 0/64px 64px;
+  box-shadow:inset 0 0 0 1.5px #0d2a22,inset 0 0 18px rgba(0,0,0,.38)}
+.gbc-art{position:absolute;left:0;right:0;top:var(--gb-art-top,0px);height:var(--gb-vis,100%);display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding-left:max(7px,2.7cqw);container-type:size}
+.gbc-spine{position:absolute;left:0;top:0;bottom:0;width:max(7px,2.7cqw);border-radius:4px 1px 1px 4px;
+  background:linear-gradient(90deg,var(--spine-dark) 0 10%,var(--spine) 10% 23%,var(--spine-mid) 23% 37%,var(--spine-hi) 37% 47%,var(--spine-mid) 47% 63%,var(--spine) 63% 80%,var(--spine-shadow) 80% 90%,rgba(80,53,31,.6) 90%);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.25),1px 0 3px rgba(0,0,0,.45)}
+.gbc-spine::before,.gbc-spine::after{content:"";position:absolute;left:-10%;width:150%;height:max(3px,1.2cqw);top:max(10px,6cqh);
+  background:linear-gradient(180deg,#52301b 0 14%,#cd9f45 14% 36%,#ffdd88 36% 57%,#cd9f45 57% 86%,#52301b 86%);border-radius:1px}
+.gbc-spine::after{top:auto;bottom:max(10px,6cqh)}
+.gbc-frame{position:absolute;left:calc(max(7px,2.7cqw) + max(5px,2.3cqw));top:max(5px,2.3cqw);right:max(5px,2.3cqw);bottom:max(5px,2.3cqw);
+  border:max(1.5px,.3cqw) solid var(--trim);border-radius:max(3px,.8cqw);
+  box-shadow:0 0 0 max(1px,.18cqw) rgba(255,236,162,.3),inset 0 0 0 max(1px,.18cqw) rgba(255,236,162,.3)}
+.gbc-frame::before{content:"";position:absolute;inset:max(2px,.7cqw);border:1px solid rgba(231,207,134,.38);border-radius:max(2px,.5cqw)}
+.gbc-orn{position:absolute;width:max(5px,1.5cqw);aspect-ratio:1;rotate:45deg;translate:-50% -50%;
+  background:radial-gradient(circle,#52301b 0 22%,transparent 24%),linear-gradient(135deg,#ffeca2,#cd9f45 55%,#8a5a1c);box-shadow:0 0 0 1px #52301b}
+.o1,.o3{left:calc(max(7px,2.7cqw) + max(5px,2.3cqw) + max(.75px,.15cqw))}
+.o2,.o4{left:calc(100% - max(5px,2.3cqw) - max(.75px,.15cqw))}
+.o1,.o2{top:calc(max(5px,2.3cqw) + max(.75px,.15cqw))}
+.o3,.o4{top:calc(100% - max(5px,2.3cqw) - max(.75px,.15cqw))}
+.gbc-corner{position:absolute;right:0;width:max(10px,5.5cqw);aspect-ratio:1;
+  background:linear-gradient(225deg,#ffeca2 0,#e0b65a 30%,#a8752c 60%,#6e4514);clip-path:polygon(0 0,100% 0,100% 100%);
+  filter:drop-shadow(0 0 1px #3a2112)}
+.k1{top:0}
+.k2{bottom:0;rotate:90deg}
+.gbc-panel{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;width:max(calc(56cqw + 26px),min(84cqw,50cqh));max-width:calc(100% - 8px);container-type:inline-size;
+  margin-top:max(4px,4cqh);padding:max(5px,2.4cqw) max(5px,3cqw) max(4px,1.8cqw);border-radius:max(4px,1.1cqw);color:#413019;text-align:center;line-height:1.15;
+  background:#e7e2bd url(assets/menu/paper-light.png) 0 0/64px 64px;
+  box-shadow:0 0 0 max(1.5px,.32cqw) #bb8525,inset 0 0 0 max(1.5px,.32cqw) #ffeca2,max(2px,.5cqw) max(3px,.7cqw) 0 rgba(0,0,0,.38)}
+.gbc-shine{position:absolute;left:50%;top:0;translate:-50% -72%;width:max(12px,12cqw);aspect-ratio:64/72;
+  background:url(assets/menu/shine.png) no-repeat center/100% 100%;transform-origin:50% 100%;animation:lean 1.5s steps(1) infinite}
+.gbc-wm{display:block;width:100%;height:auto;margin-top:max(2px,1.6cqw)}
+.gbc-title{display:flex;align-items:center;gap:2.3cqw;margin-top:max(2px,2cqw);font-weight:800;font-size:max(7.5px,6.3cqw);letter-spacing:.06em;color:#246b4e;white-space:nowrap}
+.gbc-title::before,.gbc-title::after{content:"";width:7.5cqw;height:max(1px,.6cqw);background:#bb8525;border-radius:1px}
+.gbc-sub{margin-top:max(1px,1cqw);font-weight:800;font-size:max(6px,3cqw);letter-spacing:.08em;color:#6c5830;white-space:nowrap}
+.gbc-ship,.gbc-fish,.gbc-palm,.gbc-pianta{position:absolute;bottom:calc(max(5px,2.3cqw) + max(2px,1.2cqw));animation:pose 1.5s steps(1) infinite}
+.gbc-ship{left:calc(max(7px,2.7cqw) + max(6px,4cqw));width:max(19px,8.5cqw);aspect-ratio:96/72;background-image:url(assets/menu/ship.png)}
+.gbc-fish{left:calc(max(7px,2.7cqw) + max(26px,13.5cqw));width:max(10px,4.4cqw);aspect-ratio:1;background-image:url(assets/menu/fish.png);margin-bottom:max(1px,.6cqw)}
+.gbc-palm{right:max(8px,4.5cqw);width:max(17px,7.8cqw);aspect-ratio:80/72;background-image:url(assets/menu/palm.png)}
+.gbc-pianta{right:calc(max(8px,4.5cqw) + max(17px,7.8cqw));width:max(7px,2.6cqw);aspect-ratio:24/32;background-image:url(assets/menu/tab-pianta.png);animation:pianta 3s steps(1) infinite}
+.gb-front{background:#1f5446}
+
+/* ---- the book as a button ---- */
+.bookbtn{--bk-w:96px;position:relative;display:flex;align-items:center;gap:16px;color:var(--ink);text-decoration:none;border-radius:10px;
+  cursor:url(assets/menu/glove.png) 45 6,pointer;-webkit-tap-highlight-color:transparent}
+.bk-slot{position:relative;display:block;flex:none;width:var(--bk-w);aspect-ratio:5/6}
+.bk{position:absolute;inset:0;display:block;transform-origin:0 50%;transform:perspective(700px) rotateY(-16deg) rotateZ(-2deg);
+  filter:drop-shadow(3px 5px 0 var(--drop));transition:transform .28s cubic-bezier(.3,.7,.3,1.2),translate .28s cubic-bezier(.3,.7,.3,1.2)}
+.bk-pages{position:absolute;left:8%;top:2.5%;right:-5px;bottom:-5px;border-radius:2px 5px 6px 2px;
+  background:repeating-linear-gradient(90deg,#efe7c4 0 2px,#cdbd8d 2px 3px);box-shadow:inset 0 0 0 1px #9c8350,2px 2px 0 1px #143a31}
+.bookbtn:hover .bk,.bookbtn:focus-visible .bk{translate:0 -6px;transform:perspective(700px) rotateY(-24deg) rotateZ(-2deg);animation:bk-wiggle 2.4s ease-in-out .1s infinite}
+@keyframes bk-wiggle{0%,40%,100%{rotate:0deg}8%{rotate:-3deg}16%{rotate:2.5deg}24%{rotate:-1.5deg}32%{rotate:.8deg}}
+.bookbtn:focus-visible{outline:none}
+.bookbtn:focus-visible .gbc{box-shadow:inset 0 0 0 1.5px #0d2a22,0 0 0 3px var(--focus)}
+.bookbtn-text{display:flex;flex-direction:column;gap:1px;font-weight:800}
+.bookbtn-text .btn-meta{font-weight:500}
+.bookbtn:hover .btn-label{color:var(--value)}
+.bookbtn.is-away .bk{visibility:hidden}
+.cta .bookbtn-hero{grid-column:3;grid-row:1/span 2;align-self:center;margin:0 4px 0 6px}
+.bookbtn-hero .bookbtn-text{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.bookbtn-big{--bk-w:92px;display:inline-flex;margin-top:24px;padding:14px 30px 14px 20px;background:var(--paper-hi);
+  box-shadow:0 0 0 2px var(--trim),inset 0 0 0 2px var(--trim-light),3px 4px 0 2px var(--drop)}
+.bookbtn-big .btn-label{font-size:1.15rem}
+@media (max-width:680px){
+  .cta .bookbtn-hero{--bk-w:72px;grid-column:1/-1;grid-row:auto;margin:0;padding:10px 16px 10px 18px;background:var(--paper-hi);
+    box-shadow:0 0 0 2px var(--trim),inset 0 0 0 2px var(--trim-light),3px 4px 0 2px var(--drop)}
+  .bookbtn-hero .bookbtn-text{position:static;width:auto;height:auto;overflow:visible;clip-path:none;white-space:normal}
+  .bookbtn-big{--bk-w:72px;display:flex;padding:12px 18px 12px 16px}
+}
+@media (prefers-reduced-motion:reduce){
+  .bk{transition:none}
+  .bookbtn:hover .bk,.bookbtn:focus-visible .bk{animation:none}
+}
+/* the book on its way between the button and the full cover */
+.gb-flyer{position:fixed;z-index:4;left:0;top:0;pointer-events:none;transform-origin:0 50%}
+.gb-flyer .gbc-art{top:0;height:100%}
+.gb-flyer .bk{transform:none;translate:none;rotate:none;animation:none;transition:none}
+.gb.is-flying .gb-book{visibility:hidden}
 
 /* GameCube face buttons, drawn like the real controller (A big green, B small red, X/Y grey kidney beans, Z purple, L/R grey shoulders) */
 .glyph,.g-body kbd.gc{display:inline-block;vertical-align:middle;padding:0;border:0;border-radius:0;box-shadow:none;min-width:0;

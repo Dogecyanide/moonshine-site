@@ -156,8 +156,35 @@
     if (!p) return "50% 30%";
     return `${Math.round(p.x - r.left)}px ${Math.round(p.y - r.top)}px`;
   }
+  // ---- the small book button flying up to become the real cover (and back) ----
+  const FLY_MS = 640;
+  let srcBtn = null;
+  const onScreen = el => { const r = el.getBoundingClientRect(); return r.width > 0 && r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth; };
+  function bkState(btn) {
+    const r = btn.querySelector(".bk-slot").getBoundingClientRect(), cs = getComputedStyle(btn.querySelector(".bk"));
+    return { left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px", transform: cs.transform, translate: cs.translate, rotate: cs.rotate };
+  }
+  // Only the visible part of the real cover carries the art, so the flying book lines up with it exactly.
+  function coverState() {
+    const r = cover.getBoundingClientRect();
+    const top = Math.max(r.top, 0), h = Math.max(140, Math.min(r.bottom, innerHeight) - top);
+    gb.style.setProperty("--gb-vis", h + "px");
+    gb.style.setProperty("--gb-art-top", (top - r.top) + "px");
+    return { left: r.left + "px", top: top + "px", width: r.width + "px", height: h + "px", transform: "none", translate: "none", rotate: "none" };
+  }
+  function makeFlyer(btn) {
+    const f = document.createElement("div");
+    f.className = "gb-flyer";
+    f.setAttribute("aria-hidden", "true");
+    f.appendChild(btn.querySelector(".bk").cloneNode(true));
+    gb.appendChild(f);
+    return f;
+  }
+  const bookButton = () => (srcBtn && onScreen(srcBtn) ? srcBtn : [...document.querySelectorAll("#top .bookbtn")].find(onScreen)) || null;
+
   function settle() {
-    gb.classList.remove("is-anim");
+    gb.classList.remove("is-anim", "is-flying");
+    gb.querySelectorAll(".gb-flyer").forEach(f => f.remove());
     [book, cover, shadeEl, scrim, ...cover.querySelectorAll(".gb-face")].forEach(el => el.getAnimations().forEach(a => a.cancel()));
   }
 
@@ -182,17 +209,33 @@
       if (my === run) focusPage();
       return;
     }
-    // 1. the closed book flies up from the button; 2. the cover swings open on its spine.
+    // 1. the closed book flies up (from the book button itself when that was clicked); 2. the cover swings open on its spine.
     gb.classList.add("is-anim");
-    book.style.transformOrigin = originFor(lastOrigin);
     const o = (duration, easing, delay = 0) => ({ duration, easing, delay, fill: "both" });
     scrim.animate([{ opacity: 0 }, { opacity: 1 }], o(380, "ease-out"));
-    const fly = book.animate([{ transform: "scale(.18)", opacity: 0 }, { transform: "scale(.18)", opacity: 1, offset: .15 }, { transform: "none", opacity: 1 }], o(460, "cubic-bezier(.2,.75,.25,1)"));
-    cover.animate([{ transform: "rotateY(0deg)" }, { transform: "rotateY(-180deg)" }], o(820, "cubic-bezier(.5,.05,.3,1)", 420));
-    cover.querySelectorAll(".gb-face").forEach(f => f.animate([{ opacity: 1 }, { opacity: 1, offset: .55 }, { opacity: 0 }], o(820, "linear", 420)));
-    const last = shadeEl.animate([{ opacity: .7 }, { opacity: .7, offset: .2 }, { opacity: 0 }], o(1240, "ease-in"));
+    let fly, T;
+    if (opts.from) {
+      srcBtn = opts.from;
+      gb.classList.add("is-flying");
+      const to = coverState(), from = bkState(srcBtn);
+      const flyer = makeFlyer(srcBtn);
+      srcBtn.classList.add("is-away");
+      fly = flyer.animate([from, to], o(FLY_MS, "cubic-bezier(.32,.08,.2,1)"));
+      flyer.querySelector(".bk-pages").animate([{ opacity: 1 }, { opacity: 0 }], o(FLY_MS * .8, "ease-in"));
+      flyer.querySelector(".bk").animate([{ filter: getComputedStyle(srcBtn.querySelector(".bk")).filter }, { filter: "drop-shadow(0 20px 40px rgba(0,0,0,.45))" }], o(FLY_MS, "ease-out"));
+      T = FLY_MS + 30;
+    } else {
+      book.style.transformOrigin = originFor(lastOrigin);
+      coverState();
+      fly = book.animate([{ transform: "scale(.18)", opacity: 0 }, { transform: "scale(.18)", opacity: 1, offset: .15 }, { transform: "none", opacity: 1 }], o(460, "cubic-bezier(.2,.75,.25,1)"));
+      T = 420;
+    }
+    cover.animate([{ transform: "rotateY(0deg)" }, { transform: "rotateY(-180deg)" }], o(820, "cubic-bezier(.5,.05,.3,1)", T));
+    cover.querySelectorAll(".gb-face").forEach(f => f.animate([{ opacity: 1 }, { opacity: 1, offset: .55 }, { opacity: 0 }], o(820, "linear", T)));
+    const last = shadeEl.animate([{ opacity: .7 }, { opacity: .7, offset: (T - 40) / (T + 820) }, { opacity: 0 }], o(T + 820, "ease-in"));
     await wait(fly);
     if (my !== run) return;
+    if (opts.from) { gb.classList.remove("is-flying"); gb.querySelectorAll(".gb-flyer").forEach(f => f.remove()); }
     await wait(last);
     if (my !== run) return;
     settle();
@@ -210,6 +253,8 @@
       root.classList.remove("gb-lock");
       outside.forEach(el => { el.inert = false; });
       document.title = mainTitle;
+      document.querySelectorAll(".bookbtn.is-away").forEach(b => b.classList.remove("is-away"));
+      srcBtn = null;
       if (lastFocus && lastFocus.isConnected && opts.restoreFocus !== false) lastFocus.focus({ preventScroll: true });
     };
     if (opts.animate === false) { finish(); return; }
@@ -220,6 +265,28 @@
     }
     settle();
     gb.classList.add("is-anim");
+    const target = bookButton();
+    if (target) {
+      // The cover swings shut, then the closed book shrinks back into its button.
+      const o = (duration, easing, delay = 0) => ({ duration, easing, delay, fill: "both" });
+      coverState();
+      cover.animate([{ transform: "rotateY(-180deg)" }, { transform: "rotateY(0deg)" }], o(700, "cubic-bezier(.55,0,.4,1)"));
+      cover.querySelectorAll(".gb-face").forEach(f => f.animate([{ opacity: 0 }, { opacity: 1, offset: .45 }, { opacity: 1 }], o(700, "linear")));
+      const shut = shadeEl.animate([{ opacity: 0 }, { opacity: .7 }], o(700, "ease-in"));
+      await wait(shut);
+      if (my !== run) return;
+      target.classList.add("is-away");
+      gb.classList.add("is-flying");
+      const from = coverState(), to = bkState(target);
+      const flyer = makeFlyer(target);
+      const back = flyer.animate([from, to], o(FLY_MS, "cubic-bezier(.5,0,.3,1)"));
+      flyer.querySelector(".bk-pages").animate([{ opacity: 0 }, { opacity: 1 }], o(FLY_MS, "ease-in", FLY_MS * .2));
+      scrim.animate([{ opacity: 1 }, { opacity: 0 }], o(FLY_MS, "ease-in"));
+      await wait(back);
+      if (my !== run) return;
+      finish();
+      return;
+    }
     // Close back down onto where the book came from when that spot is on screen.
     let p = null;
     if (lastFocus && lastFocus.isConnected && lastFocus.closest("#top")) {
@@ -261,7 +328,7 @@
     history.pushState({ gb: 1 }, "", "#guide/" + id);
     pushed = true;
     const r = a.getBoundingClientRect();
-    open(id, { animate: true, origin: e.detail ? { x: e.clientX, y: e.clientY } : { x: r.left + r.width / 2, y: r.top + r.height / 2 } });
+    open(id, { animate: true, from: a.classList.contains("bookbtn") ? a : null, origin: e.detail ? { x: e.clientX, y: e.clientY } : { x: r.left + r.width / 2, y: r.top + r.height / 2 } });
   });
 
   addEventListener("popstate", () => {
