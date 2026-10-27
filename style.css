@@ -117,7 +117,7 @@ h1{margin:0;line-height:0}
 /* ---- page: teal sidebar + content column ---- */
 .page{display:grid;grid-template-columns:172px 1fr}
 .sidebar{background:var(--side);border-right:2px solid var(--side-line);color:var(--side-text);
-  position:sticky;top:84px;align-self:start;max-height:calc(100vh - 84px);max-height:calc(100svh - 84px);
+  position:sticky;top:84px;align-self:start;height:calc(100vh - 84px);height:calc(100svh - 84px);
   overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--trim) transparent}
 .sidebar::-webkit-scrollbar{width:10px}
 .sidebar::-webkit-scrollbar-track{background:transparent;margin:8px 0}
