@@ -314,6 +314,25 @@ p.small.help{margin-top:18px}
 .g-help .lead{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
 .g-where{font-size:.75rem;font-weight:800;color:var(--value);border:1.5px solid currentColor;border-radius:999px;padding:0 9px}
 .g-help .small{color:var(--ink)}
+/* Screenshots and clips on guidebook pages: framed like an in-game shot on the parchment. */
+.g-shot{margin:6px 0 18px;max-width:520px}
+.g-shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px;margin:6px 0 18px;max-width:720px}
+.g-shots .g-shot{margin:0;max-width:none}
+.g-shots .g-shot-strip,.g-shot-strip{grid-column:1/-1;max-width:none}
+.g-shot-frame{position:relative;padding:4px;border-radius:6px;background:#12261e;line-height:0;
+  box-shadow:0 0 0 2px var(--trim),inset 0 0 0 2px var(--trim-light),3px 4px 0 2px var(--drop)}
+.g-shot img,.g-shot video{display:block;width:100%;height:auto;border-radius:3px;background:#12261e}
+.g-shot video::-webkit-media-controls-panel{background-image:none}
+.g-play{position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;border:0;border-radius:50%;cursor:pointer;
+  background:rgba(18,38,30,.82);box-shadow:0 0 0 2px var(--trim),inset 0 0 0 2px var(--trim-light)}
+.g-play::before{content:"";position:absolute;left:25px;top:20px;border-style:solid;border-width:12px 0 12px 20px;border-color:transparent transparent transparent #ffe066}
+.g-play:focus-visible{outline:none;box-shadow:0 0 0 2px var(--trim),0 0 0 5px var(--focus)}
+.g-shot figcaption{margin:9px 2px 0;font-size:.9rem;line-height:1.45;color:var(--muted)}
+.g-shot figcaption kbd{font-size:.8rem}
+@media (max-width:600px){
+  .g-shots{grid-template-columns:minmax(0,1fr);gap:16px}
+  .g-shot{max-width:none}
+}
 .g-pn{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
 .g-pn a{display:flex;flex-direction:column;padding:8px 16px;border-radius:8px;text-decoration:none;font-weight:800;color:var(--ink);background:var(--paper-hi);
   box-shadow:0 0 0 2px var(--trim),inset 0 0 0 2px var(--trim-light),3px 4px 0 2px var(--drop)}

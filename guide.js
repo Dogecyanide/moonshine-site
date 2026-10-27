@@ -411,3 +411,48 @@ function makeBook(gb, NAME, CFG) {
   }
 }
 })();
+
+// ---- clips on guidebook pages ----
+// Nothing loads until a page with a clip is open. Clips play muted and looped while
+// on screen; with reduced motion or data saver they stay on the poster with controls.
+(() => {
+  const vids = [...document.querySelectorAll("video.g-vid")];
+  if (!vids.length || !("IntersectionObserver" in window)) return;
+  const rm = matchMedia("(prefers-reduced-motion: reduce)");
+  const still = () => rm.matches || !!(navigator.connection && navigator.connection.saveData);
+  const arm = v => { if (v.dataset.poster) { v.poster = v.dataset.poster; v.removeAttribute("data-poster"); } };
+  const feed = v => {
+    if (v.dataset.fed) return;
+    v.dataset.fed = "1";
+    v.querySelectorAll("source[data-src]").forEach(s => { s.src = s.dataset.src; s.removeAttribute("data-src"); });
+    v.load();
+  };
+  // Reduced motion or data saver: a play button over the poster, and nothing fetched until it is pressed.
+  const mode = v => {
+    const frame = v.parentElement;
+    let btn = frame.querySelector(".g-play");
+    if (!still() || v.dataset.fed) { if (btn) btn.remove(); return; }
+    if (btn) return;
+    btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "g-play";
+    btn.setAttribute("aria-label", document.documentElement.lang === "ja" ? "動画を再生" : "Play clip");
+    btn.addEventListener("click", () => { btn.remove(); v.controls = true; feed(v); v.play().catch(() => {}); });
+    frame.appendChild(btn);
+  };
+  const near = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) e.target.querySelectorAll("video.g-vid").forEach(arm);
+  }));
+  const seen = new IntersectionObserver(es => es.forEach(e => {
+    const v = e.target;
+    if (e.isIntersecting && e.intersectionRatio >= .35) { arm(v); if (!still()) { feed(v); v.play().catch(() => {}); } }
+    else if (!v.paused) v.pause();
+  }), { threshold: [0, .35] });
+  const arts = new Set(vids.map(v => v.closest(".g-chapter")).filter(Boolean));
+  arts.forEach(a => near.observe(a));
+  vids.forEach(v => {
+    mode(v);
+    seen.observe(v);
+  });
+  rm.addEventListener("change", () => vids.forEach(v => { mode(v); if (still()) v.pause(); }));
+})();
