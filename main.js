@@ -466,3 +466,22 @@ document.querySelectorAll("#top .shoulder").forEach(b => b.addEventListener("cli
   document.addEventListener("animationstart", e => { if (BEAT.has(e.animationName)) align(e.target); }, true);
   align(document.documentElement);
 })();
+
+// Keep the teal sidebar a self-contained scroll area on desktop: its max-height
+// tracks the space left under its sticky top (header + tabs when stuck, or the
+// natural page offset before that), so the Community book is reachable without
+// scrolling the whole page. Mobile hides the sidebar, so this is a no-op there.
+(() => {
+  const side = document.querySelector(".sidebar");
+  if (!side) return;
+  const wide = matchMedia("(min-width:901px)");
+  const sync = () => {
+    if (!wide.matches) { side.style.maxHeight = ""; return; }
+    const top = Math.max(0, Math.round(side.getBoundingClientRect().top));
+    side.style.maxHeight = `calc(100svh - ${top}px)`;
+  };
+  addEventListener("scroll", sync, { passive: true });
+  addEventListener("resize", sync);
+  wide.addEventListener("change", sync);
+  sync();
+})();
