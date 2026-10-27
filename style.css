@@ -123,6 +123,7 @@ h1{margin:0;line-height:0}
 .doodles{display:flex;align-items:flex-end;justify-content:center;gap:4px;padding:26px 6px}
 .content{display:flow-root;min-width:0;padding:22px 36px 30px 64px}
 section{margin-top:40px;scroll-margin-top:92px}
+#trailer{display:block;scroll-margin-top:92px}
 .intro{margin-top:0}
 h2{display:flex;align-items:center;gap:14px;margin:0 0 16px;color:var(--value);font-size:1.5rem;font-weight:800;line-height:1.3}
 h2::after{content:"";flex:1;height:2px;background:var(--rule);opacity:.7}
@@ -521,6 +522,11 @@ html.gb-lock{overflow:hidden}
 .bookbtn-big{--bk-w:92px;display:inline-flex;margin-top:24px;padding:14px 30px 14px 20px;background:var(--paper-hi);
   box-shadow:0 0 0 2px var(--trim),inset 0 0 0 2px var(--trim-light),3px 4px 0 2px var(--drop)}
 .bookbtn-big .btn-label{font-size:1.15rem}
+/* "The Guidebooks:" heading over the books, chunky and outlined like the MOONSHINE wordmark, a little smaller than Isle Delfino */
+.books-title{margin:0 0 14px;font-weight:800;font-size:.98rem;line-height:1.2;text-align:center;letter-spacing:.02em;
+  color:#ffe066;-webkit-text-stroke:5px #12261e;paint-order:stroke fill;transform:skewX(-8deg);
+  text-shadow:2px 3px 0 rgba(0,0,0,.28)}
+.mbooks-title{display:none}
 /* the books on the teal sidebar: the guidebook first and bigger, then the FAQ and the version history smaller under it */
 .side-books{display:flex;flex-direction:column;align-items:center;gap:20px;padding:0 10px 26px}
 .bookbtn-side{flex-direction:column;gap:10px;color:var(--side-text);text-align:center}
@@ -540,7 +546,8 @@ html.gb-lock{overflow:hidden}
 /* on narrow screens the sidebar is gone, so the books sit in a row under the hero buttons */
 .mbooks{display:none}
 @media (max-width:900px){
-  .mbooks{display:flex;align-items:stretch;gap:12px;margin-top:16px}
+  .mbooks-title{display:block;margin:22px 0 0;font-size:1.05rem}
+  .mbooks{display:flex;align-items:stretch;gap:12px;margin-top:12px}
   .mbooks .bookbtn{padding:10px 14px 10px 16px;background:var(--paper-hi);gap:14px;
     box-shadow:0 0 0 2px var(--trim),inset 0 0 0 2px var(--trim-light),3px 4px 0 2px var(--drop)}
   .mbooks .bookbtn-main{--bk-w:76px;flex:1.6 1 0}

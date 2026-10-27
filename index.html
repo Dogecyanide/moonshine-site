@@ -55,7 +55,7 @@
     <nav class="tabs" aria-label="Sections" data-i18n-aria="tabsLabel">
       <button type="button" class="shoulder" data-step="-1" aria-label="Previous section" data-i18n-aria="prevSection"><span aria-hidden="true">L</span></button>
       <div class="tab-list">
-        <a class="tab" href="#trailer"><span class="sprite ic-pianta" aria-hidden="true"></span><span data-i18n="tabTrailer">Trailer</span></a>
+        <a class="tab" href="#welcome"><span class="sprite ic-pianta" aria-hidden="true"></span><span data-i18n="tabWelcome">Welcome</span></a>
         <a class="tab" href="#download"><span class="sprite ic-shine" aria-hidden="true"></span><span data-i18n="tabDownload">Download</span></a>
         <a class="tab" href="#install"><span class="sprite ic-pad" aria-hidden="true"></span><span data-i18n="tabInstall">Install</span></a>
         <a class="tab" href="#features"><span class="sprite ic-mario" aria-hidden="true"></span><span data-i18n="tabFeatures">Features</span></a>
@@ -69,6 +69,7 @@
           <p class="side-title" aria-hidden="true">Isle Delfino</p>
           <img class="postcard" src="assets/icon.png" alt="" width="256" height="96">
           <div class="doodles" aria-hidden="true"><span class="sprite fish"></span><span class="sprite ship"></span></div>
+          <p class="books-title" data-i18n="booksTitle">The Guidebooks:</p>
           <nav class="side-books" aria-label="Books" data-i18n-aria="booksLabel">
             <a class="bookbtn bookbtn-side bookbtn-main" href="#guide">
               <span class="bk-slot" aria-hidden="true"><span class="bk"><span class="bk-pages"></span><!--cover--><span class="gbc"><span class="gbc-art"><span class="gbc-spine"></span><span class="gbc-frame"></span><span class="gbc-orn o1"></span><span class="gbc-orn o2"></span><span class="gbc-orn o3"></span><span class="gbc-orn o4"></span><span class="gbc-corner k1"></span><span class="gbc-corner k2"></span><span class="gbc-panel"><span class="sprite gbc-shine"></span><img class="gbc-wm" src="assets/menu/title-light.png" alt="" width="764" height="92"><span class="gbc-title"><span class="l-en">Guidebook</span><span class="l-ja" lang="ja">ガイドブック</span></span><span class="gbc-sub"><span class="l-en">All features</span><span class="l-ja" lang="ja">全機能<wbr>ガイド</span></span></span><span class="sprite gbc-ship"></span><span class="sprite gbc-fish"></span><span class="sprite gbc-pianta"></span><span class="sprite gbc-palm"></span></span></span><!--/cover--></span></span>
@@ -101,6 +102,7 @@
             <a class="btn btn-discord" href="https://discord.gg/72c42Teq3A" target="_blank" rel="noopener" data-i18n="discord">Join the Discord</a>
             <a class="btn btn-ghost" href="https://github.com/panther03/moonshine" target="_blank" rel="noopener" data-i18n="github">View on GitHub</a>
           </div>
+          <p class="books-title mbooks-title" data-i18n="booksTitle">The Guidebooks:</p>
           <nav class="mbooks" aria-label="Books" data-i18n-aria="booksLabel">
             <a class="bookbtn bookbtn-main" href="#guide">
               <span class="bk-slot" aria-hidden="true"><span class="bk"><span class="bk-pages"></span><!--cover--><span class="gbc"><span class="gbc-art"><span class="gbc-spine"></span><span class="gbc-frame"></span><span class="gbc-orn o1"></span><span class="gbc-orn o2"></span><span class="gbc-orn o3"></span><span class="gbc-orn o4"></span><span class="gbc-corner k1"></span><span class="gbc-corner k2"></span><span class="gbc-panel"><span class="sprite gbc-shine"></span><img class="gbc-wm" src="assets/menu/title-light.png" alt="" width="764" height="92"><span class="gbc-title"><span class="l-en">Guidebook</span><span class="l-ja" lang="ja">ガイドブック</span></span><span class="gbc-sub"><span class="l-en">All features</span><span class="l-ja" lang="ja">全機能<wbr>ガイド</span></span></span><span class="sprite gbc-ship"></span><span class="sprite gbc-fish"></span><span class="sprite gbc-pianta"></span><span class="sprite gbc-palm"></span></span></span><!--/cover--></span></span>
@@ -118,8 +120,9 @@
           <p id="release-info" class="release-info" data-i18n="fetching">Fetching latest release…</p>
         </section>
 
-        <section id="trailer">
-          <h2 data-i18n="trailerH">Trailer</h2>
+        <section id="welcome">
+          <span id="trailer" aria-hidden="true"></span>
+          <h2 data-i18n="welcomeH">Welcome</h2>
           <div id="trailer-slot" class="video"></div>
         </section>
 
@@ -1111,10 +1114,12 @@
 <h2 id="h-data" tabindex="-1"><span class="sprite ic-coin" aria-hidden="true"></span><span class="l-en">Data folder</span><span class="l-ja" lang="ja">保存フォルダー</span></h2>
 <div class="l-en g-body"><p>Everything lives in <code>/Moonshine data</code> on the device the launcher runs from.</p>
 <div class="g-tw"><table class="g-table"><thead><tr><th scope="col">Path</th><th scope="col">Contents</th></tr></thead><tbody><tr><td><code>moonshine.ini</code></td><td>Settings, layouts and binds, per region (<code>[settings_jp]</code>, <code>[binds_us]</code> and so on)</td></tr><tr><td><code>moonshine_*.bin</code></td><td>Records, achievements and other practice journals</td></tr><tr><td><code>theme/</code></td><td><code>background.png</code> and <code>bgm.mp3</code></td></tr><tr><td><code>ghosts/</code></td><td>Ghosts, plus <code>import/</code> and <code>share/</code></td></tr><tr><td><code>states/</code></td><td>Named SD savestates (<code>.mss</code>)</td></tr><tr><td><code>tas/</code></td><td>Saved TAS projects</td></tr><tr><td><code>layouts/</code></td><td>Layout profiles</td></tr><tr><td><code>crashes/</code></td><td>Crash reports; the newest 16 are kept</td></tr><tr><td><code>logs/</code></td><td>Logs of online sessions and Delfino Ghosts connections, useful when reporting a problem</td></tr><tr><td><code>backups/</code></td><td>Files preserved during migration</td></tr><tr><td><code>cache/</code></td><td>Ghost model assets, so they aren't extracted again on later launches</td></tr></tbody></table></div>
-<p>Binds in <code>moonshine.ini</code> can be edited by hand, for example <code>savestate_save = DLeft</code> or <code>regrab_object = X+DUp</code>.</p></div>
+<p>Binds in <code>moonshine.ini</code> can be edited by hand, for example <code>savestate_save = DLeft</code> or <code>regrab_object = X+DUp</code>.</p>
+<p>In Dolphin, Moonshine keeps its files as <code>.gci</code> files on the slot B memory card instead, in the <code>Moonshine data</code> folder that <code>Setup-Dolphin.cmd</code> makes. See <a href="#guide/dolphin">Dolphin</a>.</p></div>
 <div class="l-ja g-body" lang="ja"><p>すべてのデータは、ランチャーを起動したデバイスの <code>/Moonshine data</code> に保存されます。</p>
 <div class="g-tw"><table class="g-table"><thead><tr><th scope="col">場所</th><th scope="col">内容</th></tr></thead><tbody><tr><td><code>moonshine.ini</code></td><td>ゲーム版ごとの設定、レイアウト、ボタン割り当て（<code>[settings_jp]</code>、<code>[binds_us]</code> など）</td></tr><tr><td><code>moonshine_*.bin</code></td><td>記録、実績、その他の練習記録</td></tr><tr><td><code>theme/</code></td><td><code>background.png</code> と <code>bgm.mp3</code></td></tr><tr><td><code>ghosts/</code></td><td>ゴースト、<code>import/</code> と <code>share/</code></td></tr><tr><td><code>states/</code></td><td>名前付きのSDステート（<code>.mss</code>）</td></tr><tr><td><code>tas/</code></td><td>保存したTASプロジェクト</td></tr><tr><td><code>layouts/</code></td><td>レイアウトのプロファイル</td></tr><tr><td><code>crashes/</code></td><td>クラッシュの記録（最新16件まで）</td></tr><tr><td><code>logs/</code></td><td>オンラインと Delfino Ghosts の接続の記録。不具合を報告するときに役立ちます</td></tr><tr><td><code>backups/</code></td><td>移行時に保存したファイル</td></tr><tr><td><code>cache/</code></td><td>ゴーストのモデルデータ。次回以降の起動で再展開しません</td></tr></tbody></table></div>
-<p><code>moonshine.ini</code> のボタン割り当ては、<code>savestate_save = DLeft</code> や <code>regrab_object = X+DUp</code> のように直接編集できます。</p></div>
+<p><code>moonshine.ini</code> のボタン割り当ては、<code>savestate_save = DLeft</code> や <code>regrab_object = X+DUp</code> のように直接編集できます。</p>
+<p>Dolphinでは、Moonshineのファイルはスロット B のメモリーカードの <code>.gci</code> ファイルとして、<code>Setup-Dolphin.cmd</code> が作る <code>Moonshine data</code> フォルダーに保存されます。<a href="#guide/dolphin">Dolphin</a> を参照してください。</p></div>
 <div class="help g-help">
 <p class="lead"><span class="g-where"><span class="l-en">Where</span><span class="l-ja" lang="ja">場所</span></span><strong class="l-en">/Moonshine data on the launcher's device</strong><strong class="l-ja" lang="ja">ランチャーのデバイスの /Moonshine data</strong></p>
 <p class="small"><span class="l-en">When updating, replace only the app files. Everything in /Moonshine data stays, and the launcher moves older files there on first launch.</span><span class="l-ja" lang="ja">更新するときはアプリのファイルだけを置き換えてください。/Moonshine data の中身は残り、古いファイルは初回起動時にランチャーがここへ移します。</span></p>
@@ -1134,9 +1139,10 @@
 </ul>
 <p>Dolphin has parity with Wii: every Moonshine feature works on both.</p>
 <h3>Setting up Dolphin for 3.0.0</h3>
+<p>The quick way: extract the Dolphin download to a folder you'll keep and install 64-bit Python 3.10 or newer. In Dolphin, choose File > Open User Folder, close Dolphin completely, then drag that User folder onto <code>Setup-Dolphin.cmd</code>. It applies the three settings below, keeps your other settings and backs up the files it changes. Set Texture Cache Accuracy yourself.</p>
 <ol>
 <li><strong>Memory:</strong> Moonshine needs Dolphin's memory override for the game, with MEM1 at 32 MiB (<code>RAMOverrideEnable = True</code>, <code>MEM1Size = 33554432</code>) and <code>MMU = False</code>. Ghosts need this.</li>
-<li><strong>Moonshine data:</strong> slot B holds a GCI Folder memory card for Moonshine; slot A stays for your normal Sunshine save. Keep both when updating.</li>
+<li><strong>Moonshine data:</strong> slot B is a GCI Folder memory card for Moonshine; slot A stays for your normal Sunshine save. Setup points slot B at a <code>Moonshine data</code> folder next to <code>Setup-Dolphin.cmd</code>, with a <code>JPN</code>, <code>USA</code> and <code>EUR</code> folder of <code>.gci</code> files. If you set slot B up yourself, the files are in Dolphin's User folder under <code>GC</code> > region > <code>Card B</code>. Keep the folder and slot A when updating, and keep the folder private: to share, use ghosts.</li>
 <li><strong>Network:</strong> for online play and Delfino Ghosts, set Config > GameCube > Serial Port 1 to <strong>Broadband Adapter (HLE)</strong>.</li>
 </ol>
 <h3>Good to know</h3>
@@ -1152,9 +1158,10 @@
 </ul>
 <p>DolphinはWiiと同等です。Moonshineのすべての機能をどちらでも使えます。</p>
 <h3>3.0.0 用のDolphinの設定</h3>
+<p>簡単な方法：Dolphin用のダウンロードを残しておくフォルダーに展開し、64ビット版の Python 3.10 以降を入れます。Dolphinで File > Open User Folder を選んでDolphinを完全に閉じ、そのユーザーフォルダーを <code>Setup-Dolphin.cmd</code> にドラッグします。下の三つの設定が適用され、ほかの設定はそのまま残り、変更したファイルはバックアップされます。Texture Cache Accuracy は自分で設定してください。</p>
 <ol>
 <li><strong>メモリー：</strong>このゲームでDolphinのメモリー上書きを有効にし、MEM1を32 MiB（<code>RAMOverrideEnable = True</code>、<code>MEM1Size = 33554432</code>）、<code>MMU = False</code> にする必要があります。ゴーストに必要です。</li>
-<li><strong>Moonshine のデータ：</strong>スロット B にはMoonshine用のGCIフォルダーのメモリーカードを使い、スロット A は通常のサンシャインのセーブ用に残します。更新時はどちらも残してください。</li>
+<li><strong>Moonshine のデータ：</strong>スロット B にはMoonshine用のGCIフォルダーのメモリーカードを使い、スロット A は通常のサンシャインのセーブ用に残します。設定ツールはスロット B を <code>Setup-Dolphin.cmd</code> と同じ場所の <code>Moonshine data</code> フォルダーに向けます。中にはゲーム版ごとの <code>JPN</code>、<code>USA</code>、<code>EUR</code> フォルダーと <code>.gci</code> ファイルがあります。スロット B を自分で設定した場合は、Dolphinのユーザーフォルダーの <code>GC</code> > ゲーム版 > <code>Card B</code> にあります。更新時はこのフォルダーとスロット A を残し、人には渡さないでください。共有にはゴーストを使います。</li>
 <li><strong>ネットワーク：</strong>オンラインと Delfino Ghosts を使うには、Config > GameCube > Serial Port 1 を <strong>Broadband Adapter (HLE)</strong> にします。</li>
 </ol>
 <h3>知っておくと便利なこと</h3>
@@ -2273,9 +2280,9 @@
 <div class="g-face g-front"><div class="g-scroll">
 <h2 id="fh-updating" tabindex="-1"><span class="sprite ic-shine" aria-hidden="true"></span><span class="l-en">How do I update without losing my data?</span><span class="l-ja" lang="ja">データを消さずに更新するには？</span></h2>
 <div class="l-en g-body"><p>Replace the app files with the ones from the new ZIP. Use the launcher and mod files from the same ZIP. Everything in <code>/Moonshine data</code> stays: settings, layouts, records, ghosts, states and TAS projects.</p>
-<p>If you still have <code>apps/susamune_launcher</code>, rename it to <code>apps/moonshine_launcher</code> first. In Dolphin, keep both memory cards (slot A and slot B).</p></div>
+<p>If you still have <code>apps/susamune_launcher</code>, rename it to <code>apps/moonshine_launcher</code> first. In Dolphin, keep your <code>Moonshine data</code> folder and your slot A memory card.</p></div>
 <div class="l-ja g-body" lang="ja"><p>アプリのファイルを新しいZIPのものに置き換えます。ランチャーとmodファイルは同じZIPのものを使ってください。<code>/Moonshine data</code> の中身（設定、レイアウト、記録、ゴースト、ステート、TASプロジェクト）はそのまま残ります。</p>
-<p><code>apps/susamune_launcher</code> が残っている場合は、先に <code>apps/moonshine_launcher</code> に名前を変えてください。Dolphinでは両方のメモリーカード（スロット A と B）を残してください。</p></div>
+<p><code>apps/susamune_launcher</code> が残っている場合は、先に <code>apps/moonshine_launcher</code> に名前を変えてください。Dolphinでは <code>Moonshine data</code> フォルダーとスロット A のメモリーカードを残してください。</p></div>
 <div class="help g-help">
 <p class="lead"><span class="g-where"><span class="l-en">In the guide</span><span class="l-ja" lang="ja">ガイドでは</span></span><strong class="l-en"><a href="#guide/getting-started">Getting started</a>, <a href="#guide/data">Data folder</a></strong><strong class="l-ja" lang="ja"><a href="#guide/getting-started">導入と起動</a>、<a href="#guide/data">保存フォルダー</a></strong></p>
 </div>
@@ -2287,21 +2294,19 @@
 <div class="g-face g-front"><div class="g-scroll">
 <h2 id="fh-dolphin-setup" tabindex="-1"><span class="sprite ic-shine" aria-hidden="true"></span><span class="l-en">How do I set up Dolphin?</span><span class="l-ja" lang="ja">Dolphinはどう設定すればいいですか？</span></h2>
 <div class="l-en g-body"><ol>
-<li>Apply the matching BPS patch to your own clean ISO.</li>
-<li>Use a current Dolphin release, not 5.0.</li>
-<li>Turn on the memory override with MEM1 at 32 MiB, and MMU off. Ghosts need this.</li>
-<li>Put a GCI Folder memory card in slot B for Moonshine. Slot A stays for your normal Sunshine save.</li>
-<li>For online play and Delfino Ghosts, set Serial Port 1 to Broadband Adapter (HLE).</li>
-<li>Set Texture Cache Accuracy to Safe.</li>
+<li>Extract the Dolphin download to a folder you'll keep, and install 64-bit Python 3.10 or newer.</li>
+<li>Drag your clean Sunshine ISO onto <code>Apply-ISO.cmd</code>. It makes a separate Moonshine ISO.</li>
+<li>Use a current Dolphin release, not 5.0. In Dolphin, choose File > Open User Folder, then close Dolphin completely.</li>
+<li>Drag that User folder onto <code>Setup-Dolphin.cmd</code>. It turns on the memory override (MEM1 32 MiB, MMU off), sets Serial Port 1 to Broadband Adapter (HLE) and points slot B at a new <code>Moonshine data</code> folder. Slot A stays for your normal Sunshine save.</li>
+<li>Set Texture Cache Accuracy to Safe yourself.</li>
 </ol>
 <p>The Dolphin chapter has the exact settings.</p></div>
 <div class="l-ja g-body" lang="ja"><ol>
-<li>自分で用意したきれいなISOに、対応するBPSパッチを当てます。</li>
-<li>5.0ではなく、最新のDolphinを使います。</li>
-<li>メモリー上書きを有効にしてMEM1を32 MiBにし、MMUはオフにします。ゴーストに必要です。</li>
-<li>スロット B にMoonshine用のGCIフォルダーのメモリーカードを入れます。スロット A は通常のサンシャインのセーブ用です。</li>
-<li>オンラインと Delfino Ghosts を使うには、Serial Port 1 を Broadband Adapter (HLE) にします。</li>
-<li>Texture Cache Accuracy を Safe にします。</li>
+<li>Dolphin用のダウンロードを、残しておくフォルダーに展開します。64ビット版の Python 3.10 以降も入れてください。</li>
+<li>きれいなサンシャインのISOを <code>Apply-ISO.cmd</code> にドラッグします。別のMoonshine用ISOが作られます。</li>
+<li>5.0ではなく、最新のDolphinを使います。Dolphinで File > Open User Folder を選び、Dolphinを完全に閉じます。</li>
+<li>そのユーザーフォルダーを <code>Setup-Dolphin.cmd</code> にドラッグします。メモリー上書き（MEM1 32 MiB、MMUオフ）、Serial Port 1 の Broadband Adapter (HLE)、新しい <code>Moonshine data</code> フォルダーを使うスロット B が設定されます。スロット A は通常のサンシャインのセーブ用のままです。</li>
+<li>Texture Cache Accuracy は自分で Safe にしてください。</li>
 </ol>
 <p>詳しい設定値はDolphinの章にあります。</p></div>
 <div class="help g-help">
@@ -2350,7 +2355,7 @@
 <li><code>logs/</code>: online and Delfino Ghosts connection logs</li>
 <li><code>crashes/</code>: crash reports</li>
 </ul>
-<p>In Dolphin, Moonshine's files are on the slot B memory card.</p></div>
+<p>In Dolphin, they are <code>.gci</code> files on the slot B memory card, in the <code>Moonshine data</code> folder that <code>Setup-Dolphin.cmd</code> made next to itself, in the folder you extracted the Dolphin download to. It has a <code>JPN</code>, <code>USA</code> and <code>EUR</code> folder, one per game region. If you set up slot B yourself, look in Dolphin's User folder (File > Open User Folder) under <code>GC</code> > region > <code>Card B</code>. Keep this folder private; to share, use ghosts.</p></div>
 <div class="l-ja g-body" lang="ja"><p>ランチャーを起動したデバイスの <code>/Moonshine data</code> にあります。</p>
 <ul>
 <li><code>moonshine.ini</code>：設定、レイアウト、ボタン割り当て</li>
@@ -2361,7 +2366,7 @@
 <li><code>logs/</code>：オンラインと Delfino Ghosts の接続ログ</li>
 <li><code>crashes/</code>：クラッシュの記録</li>
 </ul>
-<p>Dolphinでは、Moonshineのファイルはスロット B のメモリーカードにあります。</p></div>
+<p>Dolphinでは、スロット B のメモリーカードの <code>.gci</code> ファイルとして、<code>Setup-Dolphin.cmd</code> が同じ場所（Dolphin用ダウンロードを展開したフォルダー）に作った <code>Moonshine data</code> フォルダーに保存されます。中にはゲーム版ごとに <code>JPN</code>、<code>USA</code>、<code>EUR</code> フォルダーがあります。スロット B を自分で設定した場合は、Dolphinのユーザーフォルダー（File > Open User Folder）の <code>GC</code> > ゲーム版 > <code>Card B</code> を見てください。このフォルダーは人に渡さず、共有にはゴーストを使ってください。</p></div>
 <div class="help g-help">
 <p class="lead"><span class="g-where"><span class="l-en">In the guide</span><span class="l-ja" lang="ja">ガイドでは</span></span><strong class="l-en"><a href="#guide/data">Data folder</a></strong><strong class="l-ja" lang="ja"><a href="#guide/data">保存フォルダー</a></strong></p>
 </div>
@@ -2631,8 +2636,10 @@
 <div class="g-face g-front"><div class="g-scroll">
 <h2 id="fh-crash" tabindex="-1"><span class="sprite ic-coin" aria-hidden="true"></span><span class="l-en">The game crashed. What should I send?</span><span class="l-ja" lang="ja">ゲームがクラッシュしました。何を送ればいいですか？</span></h2>
 <div class="l-en g-body"><p>Crash reports are saved in <code>/Moonshine data/crashes</code>, up to the 16 newest. Send the matching text, <code>.bin</code> and <code>.core</code> files from the same report together.</p>
+<p>Dolphin doesn't save crash files, since they need the Wii's SD card or USB drive. Take a screenshot of anything shown on screen instead.</p>
 <p>Also include the game region, scene, settings, the steps that caused it and the build checksum shown in game.</p></div>
 <div class="l-ja g-body" lang="ja"><p>クラッシュの記録は <code>/Moonshine data/crashes</code> に最新16件まで保存されます。同じ報告のテキスト、<code>.bin</code>、<code>.core</code> ファイルをまとめて送ってください。</p>
+<p>Dolphinではクラッシュのファイルは保存されません（WiiのSDカードかUSBドライブが必要です）。代わりに画面に表示された内容をスクリーンショットで撮ってください。</p>
 <p>ゲーム版、場面、設定、起きたときの手順、ゲーム内に表示されるビルドのチェックサムも書いてください。</p></div>
 <div class="help g-help">
 <p class="lead"><span class="g-where"><span class="l-en">In the guide</span><span class="l-ja" lang="ja">ガイドでは</span></span><strong class="l-en"><a href="#guide/help">Tips and reports</a>, <a href="#guide/data">Data folder</a></strong><strong class="l-ja" lang="ja"><a href="#guide/help">ヒントと不具合の報告</a>、<a href="#guide/data">保存フォルダー</a></strong></p>
@@ -2692,8 +2699,8 @@
 <article class="g-chapter" id="fch-dolphin-ghosts" data-ch="dolphin-ghosts" data-cat="trouble" aria-labelledby="fh-dolphin-ghosts">
 <div class="g-face g-front"><div class="g-scroll">
 <h2 id="fh-dolphin-ghosts" tabindex="-1"><span class="sprite ic-coin" aria-hidden="true"></span><span class="l-en">In Dolphin, ghosts don't work or my settings don't save.</span><span class="l-ja" lang="ja">Dolphinでゴーストが動かない、設定が保存されません。</span></h2>
-<div class="l-en g-body"><p>Ghosts need Dolphin's memory override with MEM1 at 32 MiB and MMU off. Settings and other files are saved on the GCI Folder memory card in slot B, so make sure it is set up. The Dolphin chapter has the exact settings.</p></div>
-<div class="l-ja g-body" lang="ja"><p>ゴーストには、メモリー上書きでMEM1を32 MiBにし、MMUをオフにする必要があります。設定などのファイルはスロット B のGCIフォルダーのメモリーカードに保存されるので、正しく設定されているか確認してください。詳しい設定値はDolphinの章にあります。</p></div>
+<div class="l-en g-body"><p>Ghosts need Dolphin's memory override with MEM1 at 32 MiB and MMU off. Settings and other files are saved on the GCI Folder memory card in slot B, in your <code>Moonshine data</code> folder. Close Dolphin and drag its User folder onto <code>Setup-Dolphin.cmd</code> again to set both up. The Dolphin chapter has the exact settings.</p></div>
+<div class="l-ja g-body" lang="ja"><p>ゴーストには、メモリー上書きでMEM1を32 MiBにし、MMUをオフにする必要があります。設定などのファイルはスロット B のGCIフォルダーのメモリーカード（<code>Moonshine data</code> フォルダー）に保存されます。Dolphinを閉じ、ユーザーフォルダーをもう一度 <code>Setup-Dolphin.cmd</code> にドラッグすると両方設定されます。詳しい設定値はDolphinの章にあります。</p></div>
 <div class="help g-help">
 <p class="lead"><span class="g-where"><span class="l-en">In the guide</span><span class="l-ja" lang="ja">ガイドでは</span></span><strong class="l-en"><a href="#guide/dolphin">Dolphin</a></strong><strong class="l-ja" lang="ja"><a href="#guide/dolphin">Dolphin</a></strong></p>
 </div>
