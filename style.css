@@ -156,7 +156,7 @@ h2::after{content:"";flex:1;height:2px;background:var(--rule);opacity:.7}
 :is(.row:hover,.row:focus-visible,.rows:not(:hover):not(:focus-within) .row.is-default) :is(.h-sub,p,.tag,.file){color:var(--sel-text)}
 :is(.row:hover,.row:focus-visible,.rows:not(:hover):not(:focus-within) .row.is-default)::before{
   content:"";position:absolute;left:-52px;top:50%;margin-top:-16px;width:46px;height:32px;
-  background:url(assets/menu/hand.png) no-repeat 0 0/200% 100%;image-rendering:pixelated;animation:pose .75s steps(1) infinite}
+  background:url(assets/menu/hand.png) no-repeat 0 0/200% 100%;image-rendering:pixelated;animation:pose 1.5s steps(1) infinite}
 .row:focus-visible{box-shadow:0 0 0 2px var(--trim),inset 0 0 0 2px var(--trim-light),0 0 0 5px var(--focus)}
 
 /* help text box under the list, with a divider */
@@ -263,7 +263,7 @@ p.small.help{margin-top:18px}
 .g-ch:hover{background:rgba(49,110,76,.14);color:var(--ink)}
 .g-ch.is-sel{background:var(--sel);color:var(--sel-text);box-shadow:0 0 0 2px var(--trim),inset 0 0 0 2px var(--trim-light)}
 .g-ch.is-sel::before{content:"";position:absolute;left:-50px;top:50%;margin-top:-16px;width:46px;height:32px;
-  background:url(assets/menu/hand.png) no-repeat 0 0/200% 100%;image-rendering:pixelated;animation:pose .75s steps(1) infinite}
+  background:url(assets/menu/hand.png) no-repeat 0 0/200% 100%;image-rendering:pixelated;animation:pose 1.5s steps(1) infinite}
 .g-ch:focus-visible{outline:none;box-shadow:0 0 0 2px var(--trim),0 0 0 5px var(--focus)}
 .js .g-group{display:none}
 .js .g-group.is-open{display:block}

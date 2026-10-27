@@ -417,3 +417,18 @@ document.querySelectorAll("#top .shoulder").forEach(b => b.addEventListener("cli
   tabSections[i].scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth" });
   setTab(i);
 }));
+
+// One beat for every looping sprite. CSS animations each start their own
+// clock when they appear (tab switched, book opened, language toggled), so
+// pin them all to the page timeline's origin; they then flip frames together.
+// Hover wiggles are left alone, and reduced motion has no loops to sync.
+(() => {
+  if (!document.getAnimations) return;
+  const BEAT = new Set(["pose", "lean", "pianta", "bk-hop"]);
+  const align = el => {
+    for (const a of el.getAnimations({ subtree: true }))
+      if (BEAT.has(a.animationName) && a.startTime !== 0) a.startTime = 0;
+  };
+  document.addEventListener("animationstart", e => { if (BEAT.has(e.animationName)) align(e.target); }, true);
+  align(document.documentElement);
+})();
