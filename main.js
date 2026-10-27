@@ -97,6 +97,16 @@ const JA = {
   gNextCat: "次のカテゴリー",
   gChLabel: "章",
   gPnLabel: "前後の章",
+  verHist: "バージョン履歴",
+  verHistMeta: "各リリースの追加内容",
+  booksLabel: "本",
+  hHeading: "バージョン履歴：すべてのリリースを新しい順に",
+  hGitHub: "GitHubで見る",
+  hTabs: "バージョン",
+  hPrevCat: "新しいバージョン",
+  hNextCat: "古いバージョン",
+  hChLabel: "リリース",
+  hPnLabel: "新しいリリースと古いリリース",
 };
 const EN_EXTRA = {
   title: document.title,
@@ -119,6 +129,12 @@ const EN_EXTRA = {
   gNextCat: "Next category",
   gChLabel: "Chapters",
   gPnLabel: "Previous and next chapter",
+  booksLabel: "Books",
+  hTabs: "Versions",
+  hPrevCat: "Newer versions",
+  hNextCat: "Older versions",
+  hChLabel: "Releases",
+  hPnLabel: "Newer and older release",
 };
 
 const EN = { ...EN_EXTRA };

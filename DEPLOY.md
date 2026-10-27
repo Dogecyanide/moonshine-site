@@ -1,6 +1,6 @@
 # Deploying the Moonshine site (GitHub Pages, free)
 
-Static site with no build step: `index.html`, `style.css`, `main.js`, `assets/`.
+Static site with no build step to deploy: `index.html`, `style.css`, `main.js`, `guide.js`, `assets/`. (The books inside `index.html` are generated ahead of time, see below.)
 `preview-*.png` and this file don't need to be published, but they do no harm.
 
 **Never push this to the upstream repo (panther03/moonshine) or its `main` branch.**
@@ -48,6 +48,19 @@ Commit and push, and Pages redeploys automatically. While the ID is empty, a "Tr
 If the API is unreachable or rate-limited (60 requests per hour per visitor IP), or an asset name changes, every link falls back to `https://github.com/panther03/moonshine/releases/latest`.
 Keep that naming pattern in future release ZIPs, or update the `data-asset` keys in `index.html`.
 To point at a different repo, change `REPO` in `main.js` and the hard-coded links in `index.html`.
+
+## The two books (All features and Version history)
+Both books are plain HTML inside `index.html`, written there by scripts that live outside this repo, in `/workspace/guide/` on the build box:
+- `build.py` writes the guidebook between `<!-- GUIDE:START -->` and `<!-- GUIDE:END -->` (content in `content1.py` to `content5.py`), and then calls `build_history.py`.
+- `build_history.py` writes the Version history book between `<!-- HISTORY:START -->` and `<!-- HISTORY:END -->`, and its cover into every `<!--hcover-->` slot. It reads the GitHub releases from `releases.json` and the summaries from `history_content.py`.
+- `guide.js` runs both books (open, close, page flips, `#guide/<chapter>` and `#history/<version>` links).
+
+After a new Moonshine release:
+1. `python3 /workspace/guide/build_history.py --fetch` downloads the release list again and rebuilds both books. The new release gets a chapter straight away, with its title, date and files, and the script prints a warning that it has no summary yet.
+2. Add a `rel("<exact tag>", name_en=..., name_ja=..., en=..., ja=...)` entry at the top of `history_content.py` (newest first, no em or en dashes), then run `python3 /workspace/guide/build.py`.
+3. Commit `index.html` and push.
+
+The top tabs group releases by minor version from V2.0 on (V2.3, V2.2, ...), then V1.x, the V1.0 release candidates and V0.x; a new minor version gets its own tab automatically. Dates are shown in Amsterdam time.
 
 ## Local preview
 `python3 -m http.server 8000` in this folder, then open http://localhost:8000.

@@ -1,14 +1,26 @@
-// The "All features" guidebook. It lives inside index.html (#guide) and opens over the page like a book.
-// Routes: #guide opens it, #guide/<chapter> opens a chapter. Theme and language come from main.js.
+// The books that open over the main page: the "All features" guidebook (#guide) and the
+// "Version history" book (#history). Both live inside index.html and share all of this code.
+// Routes: #<book> opens one, #<book>/<chapter> opens a chapter. Theme and language come from main.js.
 (function () {
-  const gb = document.getElementById("guide");
-  if (!gb) return;
   const root = document.documentElement;
-  const GUIDE = l => `https://github.com/panther03/moonshine/blob/main/doc/guide-${l}.md`;
-  const TITLE = { en: "All features · Moonshine guidebook", ja: "全機能ガイド · Moonshine" };
   const lang = () => (root.lang === "ja" ? "ja" : "en");
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
+  const BOOKS = {
+    guide: {
+      title: { en: "All features · Moonshine guidebook", ja: "全機能ガイド · Moonshine" },
+      upstream: l => `https://github.com/panther03/moonshine/blob/main/doc/guide-${l}.md`,
+    },
+    history: {
+      title: { en: "Version history · Moonshine", ja: "バージョン履歴 · Moonshine" },
+    },
+  };
+  Object.entries(BOOKS).forEach(([name, cfg]) => {
+    const el = document.getElementById(name);
+    if (el) makeBook(el, name, cfg);
+  });
 
+function makeBook(gb, NAME, CFG) {
+  const TITLE = CFG.title;
   const book = gb.querySelector(".gb-book");
   const cover = gb.querySelector(".gb-cover");
   const shadeEl = gb.querySelector(".gb-shade");
@@ -20,6 +32,7 @@
   const cats = tabs.map(a => a.dataset.cat);
   const content = gb.querySelector(".g-content");
   const byId = id => chapters.find(a => a.dataset.ch === id);
+  const RE = new RegExp(`^#${NAME}(?:/([\\w.-]+))?$`);
 
   let current = null;     // the chapter on the open page
   let isOpen = false;
@@ -32,7 +45,7 @@
   gb.setAttribute("aria-modal", "true");
 
   const route = () => {
-    const m = location.hash.match(/^#guide(?:\/([\w-]+))?$/);
+    const m = location.hash.match(RE);
     return m ? (m[1] || "") : null;
   };
   const chapterTitle = a => { const h = a && a.querySelector(`h2 .l-${lang()}`); return h ? h.textContent : ""; };
@@ -41,7 +54,8 @@
     document.title = current ? `${chapterTitle(current)} · ${TITLE[lang()]}` : TITLE[lang()];
   }
   function updateLang() {
-    gb.querySelector(".gb-upstream").href = GUIDE(lang());
+    const up = gb.querySelector(".gb-upstream");
+    if (up && CFG.upstream) up.href = CFG.upstream(lang());
     updateTitle();
   }
 
@@ -144,8 +158,8 @@
 
   // Chapter changes replace the history entry, so the browser Back button closes the book.
   function go(id) {
-    const url = "#guide/" + id;
-    if (location.hash !== url) history.replaceState(pushed ? { gb: 1 } : history.state, "", url);
+    const url = `#${NAME}/` + id;
+    if (location.hash !== url) history.replaceState(pushed ? { gb: NAME } : history.state, "", url);
     show(id, { focus: true });
   }
 
@@ -180,7 +194,7 @@
     gb.appendChild(f);
     return f;
   }
-  const bookButton = () => (srcBtn && onScreen(srcBtn) ? srcBtn : [...document.querySelectorAll("#top .bookbtn")].find(onScreen)) || null;
+  const bookButton = () => (srcBtn && onScreen(srcBtn) ? srcBtn : [...document.querySelectorAll(`#top .bookbtn[href^="#${NAME}"]`)].find(onScreen)) || null;
 
   function settle() {
     gb.classList.remove("is-anim", "is-flying");
@@ -307,7 +321,7 @@
 
   function requestClose() {
     if (!isOpen) return;
-    if (pushed && history.state && history.state.gb) { history.back(); return; } // popstate closes it
+    if (pushed && history.state && history.state.gb === NAME) { history.back(); return; } // popstate closes it
     pushed = false;
     history.replaceState(null, "", location.pathname + location.search);
     close();
@@ -317,15 +331,15 @@
   document.addEventListener("click", e => {
     if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     const closer = e.target.closest("[data-gb-close]");
-    if (closer) { e.preventDefault(); requestClose(); return; }
-    const a = e.target.closest('a[href^="#guide"]');
+    if (closer) { if (isOpen && gb.contains(closer)) { e.preventDefault(); requestClose(); } return; }
+    const a = e.target.closest(`a[href^="#${NAME}"]`);
     if (!a) return;
-    const m = a.getAttribute("href").match(/^#guide(?:\/([\w-]+))?$/);
+    const m = a.getAttribute("href").match(RE);
     if (!m) return;
     e.preventDefault();
     if (isOpen) { go(m[1] || current.dataset.ch); return; }
     const id = byId(m[1]) ? m[1] : (current ? current.dataset.ch : chapters[0].dataset.ch);
-    history.pushState({ gb: 1 }, "", "#guide/" + id);
+    history.pushState({ gb: NAME }, "", `#${NAME}/` + id);
     pushed = true;
     const r = a.getBoundingClientRect();
     open(id, { animate: true, from: a.classList.contains("bookbtn") ? a : null, origin: e.detail ? { x: e.clientX, y: e.clientY } : { x: r.left + r.width / 2, y: r.top + r.height / 2 } });
@@ -334,7 +348,7 @@
   addEventListener("popstate", () => {
     const r = route();
     if (r === null) { if (isOpen) { pushed = false; close(); } return; }
-    pushed = !!(history.state && history.state.gb);
+    pushed = !!(history.state && history.state.gb === NAME);
     if (isOpen) { if (!current || current.dataset.ch !== r) show(r, { focus: true }); }
     else open(r, { animate: true });
   });
@@ -370,12 +384,13 @@
   updateLang();
   const start = route();
   if (start !== null) {
-    // Deep link (index.html#guide/ghosts): open straight away, with a history entry under it so Back closes the book.
+    // Deep link (index.html#guide/ghosts or #history/v2.3.3): open straight away, with a history entry under it so Back closes the book.
     const id = byId(start) ? start : chapters[0].dataset.ch;
     const base = location.pathname + location.search;
     history.replaceState(null, "", base);
-    history.pushState({ gb: 1 }, "", base + "#guide/" + id);
+    history.pushState({ gb: NAME }, "", base + `#${NAME}/` + id);
     pushed = true;
     open(id, { animate: false });
   }
+}
 })();

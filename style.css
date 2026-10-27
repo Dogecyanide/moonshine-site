@@ -130,7 +130,7 @@ h2::after{content:"";flex:1;height:2px;background:var(--rule);opacity:.7}
 .release-info{margin:14px 0 0;color:var(--muted);font-size:.9rem}
 
 /* ---- buttons: paper with gold trim; the main one is "selected" teal ---- */
-.cta{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:14px 16px;align-items:stretch}
+.cta{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px 16px;align-items:stretch}
 .cta .btn{padding-left:10px;padding-right:10px;text-align:center}
 .btn{display:inline-flex;flex-direction:column;justify-content:center;align-items:center;gap:1px;min-height:52px;padding:8px 22px;border-radius:8px;
   font-weight:800;text-decoration:none;color:var(--ink);background:var(--paper-hi);
@@ -465,6 +465,29 @@ html.gb-lock{overflow:hidden}
 .gbc-palm{right:max(8px,4.5cqw);width:max(17px,7.8cqw);aspect-ratio:80/72;background-image:url(assets/menu/palm.png)}
 .gbc-pianta{right:calc(max(8px,4.5cqw) + max(17px,7.8cqw));width:max(7px,2.6cqw);aspect-ratio:24/32;background-image:url(assets/menu/tab-pianta.png);animation:pianta 3s steps(1) infinite}
 .gb-front{background:#1f5446}
+/* the Version history book: oxblood leather, same gold trim, a coin instead of the Shine */
+.gbc-hist{background:radial-gradient(120% 85% at 40% 30%,rgba(196,96,62,.55),rgba(118,38,26,.6) 52%,rgba(42,10,6,.9)),#6a2116 url(assets/menu/paper-dark.png) 0 0/64px 64px;
+  box-shadow:inset 0 0 0 1.5px #2a0a06,inset 0 0 18px rgba(0,0,0,.4)}
+.gbc-hist .gbc-sub{color:#7a2414}
+.gbc-hist .gbc-coin{background:url(assets/menu/tab-coin.png) no-repeat 0 0/200% 100%;width:max(11px,11cqw);aspect-ratio:30/40;translate:-50% -66%;
+  animation:pose 1.5s steps(1) infinite;transform:none}
+.gbc-mario{position:absolute;bottom:calc(max(5px,2.3cqw) + max(2px,1.2cqw));right:calc(max(8px,4.5cqw) + max(17px,7.8cqw));width:max(8px,3.2cqw);aspect-ratio:35/38;
+  background:url(assets/menu/tab-mario.png) no-repeat 0 0/100% 100%;transform-origin:50% 100%;animation:lean 1.5s steps(1) infinite}
+.gb-hist .gb-front{background:#6a2116}
+/* chapter details in the Version history book */
+.h-date{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;margin:-4px 0 14px;font-weight:700}
+.h-date .g-where{margin:0}
+.h-pre{display:inline-block;padding:1px 8px;border-radius:999px;border:1.5px solid var(--trim);color:var(--value);font-size:.78rem;font-weight:800}
+.h-files{margin:4px 0 8px;padding-left:20px}
+.h-files li{margin:2px 0;overflow-wrap:anywhere}
+.h-size{color:var(--muted);font-size:.85em;white-space:nowrap}
+.g-ch .h-name,.g-pn .h-name{font-weight:600}
+@media (max-width:680px){
+  .gb-hist .tab:not(.is-active) span:not(.sprite){position:static;width:auto;height:auto;overflow:visible;clip-path:none}
+  .gb-hist .tab:not(.is-active) .sprite{display:none}
+}
+.bookbtn:focus-visible .gbc-hist{box-shadow:inset 0 0 0 1.5px #2a0a06,0 0 0 3px var(--focus)}
+.bookbtn-side:focus-visible .gbc-hist{box-shadow:inset 0 0 0 1.5px #2a0a06,0 0 0 3px #ffe68a}
 
 /* ---- the book as a button ---- */
 .bookbtn{--bk-w:96px;position:relative;display:flex;align-items:center;gap:16px;color:var(--ink);text-decoration:none;border-radius:10px;
@@ -482,21 +505,44 @@ html.gb-lock{overflow:hidden}
 .bookbtn-text .btn-meta{font-weight:500}
 .bookbtn:hover .btn-label{color:var(--value)}
 .bookbtn.is-away .bk{visibility:hidden}
-.cta .bookbtn-hero{grid-column:3;grid-row:1/span 2;align-self:center;margin:0 4px 0 6px}
-.cta .bookbtn-hero{--bk-w:80px;flex-direction:column;gap:12px}
-.bookbtn-hero .bookbtn-text{align-items:center;text-align:center;line-height:1.1}
-.bookbtn-hero .btn-label{font-size:.95rem;color:var(--value);white-space:nowrap}
-.bookbtn-hero .btn-meta{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .bookbtn-big{--bk-w:92px;display:inline-flex;margin-top:24px;padding:14px 30px 14px 20px;background:var(--paper-hi);
   box-shadow:0 0 0 2px var(--trim),inset 0 0 0 2px var(--trim-light),3px 4px 0 2px var(--drop)}
 .bookbtn-big .btn-label{font-size:1.15rem}
-@media (max-width:680px){
-  .cta .bookbtn-hero{--bk-w:80px;grid-column:1/-1;grid-row:auto;margin:0;padding:10px 16px 10px 18px;background:var(--paper-hi);
+/* the two books on the teal sidebar: the guidebook first and bigger, the version history smaller under it */
+.side-books{display:flex;flex-direction:column;align-items:center;gap:20px;padding:0 10px 26px}
+.bookbtn-side{flex-direction:column;gap:10px;color:var(--side-text);text-align:center}
+.bookbtn-side .bookbtn-text{align-items:center;line-height:1.15}
+.bookbtn-side .btn-label{font-size:1.02rem;color:var(--side-text);text-shadow:0 1px 0 rgba(0,0,0,.28)}
+.bookbtn-side .btn-meta{font-size:.76rem;opacity:.85}
+.bookbtn-side:hover .btn-label{color:#ffe68a}
+.bookbtn-side.bookbtn-main{--bk-w:104px}
+.bookbtn-side.bookbtn-hist{--bk-w:66px;gap:8px}
+.bookbtn-side.bookbtn-hist .btn-label{font-size:.88rem}
+.bookbtn-side .bk{filter:drop-shadow(3px 5px 0 rgba(0,0,0,.3))}
+.bookbtn-side .bk-pages{box-shadow:inset 0 0 0 1px #9c8350,2px 2px 0 1px rgba(0,0,0,.35)}
+.bookbtn-side:focus-visible .gbc{box-shadow:inset 0 0 0 1.5px #0d2a22,0 0 0 3px #ffe68a}
+/* on narrow screens the sidebar is gone, so the books sit in a row under the hero buttons */
+.mbooks{display:none}
+@media (max-width:900px){
+  .mbooks{display:flex;align-items:stretch;gap:12px;margin-top:16px}
+  .mbooks .bookbtn{padding:10px 14px 10px 16px;background:var(--paper-hi);gap:14px;
     box-shadow:0 0 0 2px var(--trim),inset 0 0 0 2px var(--trim-light),3px 4px 0 2px var(--drop)}
-  .cta .bookbtn-hero{flex-direction:row;gap:16px}
-  .bookbtn-hero .bookbtn-text{align-items:flex-start;text-align:left}
-  .bookbtn-hero .btn-label{font-size:1rem;color:var(--ink)}
-  .bookbtn-hero .btn-meta{position:static;width:auto;height:auto;overflow:visible;clip-path:none;white-space:normal}
+  .mbooks .bookbtn-main{--bk-w:76px;flex:1.6 1 0}
+  .mbooks .bookbtn-hist{--bk-w:46px;flex:1 1 0;gap:10px}
+  .mbooks .bookbtn-text{line-height:1.15}
+  .mbooks .bookbtn-main .btn-label{font-size:1.05rem}
+  .mbooks .bookbtn-hist .btn-label{font-size:.9rem}
+  .mbooks .btn-meta{font-size:.8rem}
+}
+@media (max-width:480px){
+  .mbooks{gap:10px}
+  .mbooks .bookbtn{padding:8px 10px;gap:10px}
+  .mbooks .bookbtn-main{--bk-w:60px}
+  .mbooks .bookbtn-hist{--bk-w:40px;gap:8px}
+  .mbooks .btn-meta{display:none}
+  .mbooks .btn-label{font-size:1rem}
+}
+@media (max-width:680px){
   .bookbtn-big{--bk-w:72px;display:flex;padding:12px 18px 12px 16px}
 }
 @media (prefers-reduced-motion:reduce){
