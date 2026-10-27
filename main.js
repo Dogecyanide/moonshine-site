@@ -266,14 +266,14 @@ function randomClip(exclude) {
   return n;
 }
 
-function renderBackground() {
-  const base = `assets/bg/${bg.theme}-${bg.n}`;
-  document.documentElement.style.setProperty("--poster", `url(${base}.jpg)`);
-  bgEl.querySelectorAll("video").forEach(v => { v.pause(); v.removeAttribute("src"); v.load(); v.remove(); });
-  const saveData = navigator.connection && navigator.connection.saveData;
-  if (reduceMotion.matches || saveData) return; // poster only
+// Clips do not loop: when one ends, a different random clip from the same
+// theme crossfades in. The next clip is preloaded in a second, hidden <video>.
+let bgGen = 0;
+
+function makeClip(n) {
+  const base = `assets/bg/${bg.theme}-${n}`;
   const v = document.createElement("video");
-  v.muted = true; v.defaultMuted = true; v.loop = true; v.autoplay = true; v.playsInline = true;
+  v.muted = true; v.defaultMuted = true; v.loop = false; v.autoplay = false; v.playsInline = true;
   v.setAttribute("muted", ""); v.setAttribute("playsinline", ""); v.setAttribute("disablepictureinpicture", "");
   v.preload = "auto"; v.tabIndex = -1;
   v.poster = `${base}.jpg`;
@@ -281,8 +281,60 @@ function renderBackground() {
     const s = document.createElement("source");
     s.src = `${base}.${ext}`; s.type = type; v.appendChild(s);
   }
+  v.dataset.n = n;
+  return v;
+}
+
+function dropClip(v) {
+  if (!v) return;
+  v.pause(); v.querySelectorAll("source").forEach(s => s.remove()); v.removeAttribute("src"); v.load(); v.remove();
+}
+
+function startClip(v, gen) {
+  let next = null, switching = false;
+  const prepare = () => {
+    if (next || gen !== bgGen) return;
+    next = makeClip(randomClip(Number(v.dataset.n)));
+    bgEl.appendChild(next); // stacked on top, invisible until it plays
+    next.load();
+  };
+  const handOff = () => {
+    if (switching || gen !== bgGen) return;
+    switching = true;
+    if (!next) prepare();
+    const n = next;
+    n.addEventListener("playing", () => {
+      if (gen !== bgGen) return;
+      bg.n = Number(n.dataset.n);
+      document.documentElement.style.setProperty("--poster", `url(assets/bg/${bg.theme}-${bg.n}.jpg)`);
+      n.classList.add("on");
+      setTimeout(() => dropClip(v), 900);
+      startClip(n, gen);
+    }, { once: true });
+    n.addEventListener("error", () => { if (gen === bgGen) { dropClip(n); v.currentTime = 0; v.play().catch(() => {}); } }, { once: true });
+    const p = n.play(); if (p) p.catch(() => {});
+  };
+  v.addEventListener("timeupdate", () => {
+    if (!v.duration || !isFinite(v.duration)) return;
+    const left = v.duration - v.currentTime;
+    if (left < 6) prepare();
+    if (left < 0.9) handOff();
+  });
+  v.addEventListener("ended", handOff);
+}
+
+function renderBackground() {
+  const gen = ++bgGen;
+  const base = `assets/bg/${bg.theme}-${bg.n}`;
+  document.documentElement.style.setProperty("--poster", `url(${base}.jpg)`);
+  bgEl.querySelectorAll("video").forEach(dropClip);
+  const saveData = navigator.connection && navigator.connection.saveData;
+  if (reduceMotion.matches || saveData) return; // poster only
+  const v = makeClip(bg.n);
+  v.autoplay = true;
   v.addEventListener("playing", () => v.classList.add("on"), { once: true });
   bgEl.appendChild(v);
+  startClip(v, gen);
   const p = v.play(); if (p) p.catch(() => {});
 }
 
