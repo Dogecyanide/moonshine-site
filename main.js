@@ -123,6 +123,15 @@ const JA = {
   fNextCat: "次のトピック",
   fChLabel: "質問",
   fPnLabel: "前後の質問",
+  comm: "コミュニティ",
+  commMeta: "プレイヤーが作ったサイト",
+  cHeading: "コミュニティの作品",
+  cTabs: "セクション",
+  cPrevCat: "前のセクション",
+  cNextCat: "次のセクション",
+  cChLabel: "サイト",
+  cPnLabel: "前後のサイト",
+  cFrame: "埋め込みサイト",
 };
 const EN_EXTRA = {
   title: document.title,
@@ -156,6 +165,12 @@ const EN_EXTRA = {
   fNextCat: "Next topic",
   fChLabel: "Questions",
   fPnLabel: "Previous and next question",
+  cTabs: "Sections",
+  cPrevCat: "Previous section",
+  cNextCat: "Next section",
+  cChLabel: "Sites",
+  cPnLabel: "Previous and next site",
+  cFrame: "Embedded site",
 };
 
 const EN = { ...EN_EXTRA };

@@ -1,5 +1,5 @@
-// The books that open over the main page: the "All features" guidebook (#guide), the FAQ (#faq)
-// and the "Version history" book (#history). All live inside index.html and share all of this code.
+// The books that open over the main page: the "All features" guidebook (#guide), the FAQ (#faq),
+// the "Version history" book (#history) and the Community book (#community). All live inside index.html and share all of this code.
 // Routes: #<book> opens one, #<book>/<chapter> opens a chapter. Theme and language come from main.js.
 (function () {
   const root = document.documentElement;
@@ -15,6 +15,9 @@
     },
     history: {
       title: { en: "Version history · Moonshine", ja: "バージョン履歴 · Moonshine" },
+    },
+    community: {
+      title: { en: "Community · Moonshine", ja: "コミュニティ · Moonshine" },
     },
   };
   // Every book, so opening one from a link inside another (the FAQ links to guide chapters) closes the other first.
@@ -455,4 +458,43 @@ function makeBook(gb, NAME, CFG) {
     seen.observe(v);
   });
   rm.addEventListener("change", () => vids.forEach(v => { mode(v); if (still()) v.pause(); }));
+})();
+
+// ---- live sites in the Community book ----
+// A site loads only while its page is open in the book, and is removed when you turn the page or
+// close the book, so nothing (like the clicker) keeps running in the background. Until then, and on
+// phones for sites marked data-live="wide", the screen shows a screenshot instead.
+(() => {
+  const gb = document.getElementById("community");
+  if (!gb) return;
+  const screens = [...gb.querySelectorAll(".c-screen[data-src]")];
+  const phone = matchMedia("(max-width:600px)");
+  const SANDBOX = "allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads";
+  const sync = () => {
+    const open = gb.classList.contains("is-open");
+    screens.forEach(s => {
+      const want = open && s.closest(".g-chapter").classList.contains("is-cur") && (s.dataset.live === "all" || !phone.matches);
+      let f = s.querySelector("iframe");
+      if (want && !f) {
+        f = document.createElement("iframe");
+        f.className = "c-frame";
+        f.setAttribute("loading", "lazy");
+        f.setAttribute("sandbox", SANDBOX);
+        f.setAttribute("allow", "fullscreen; autoplay");
+        f.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+        f.title = s.dataset.title;
+        f.addEventListener("load", () => { if (f.isConnected) s.classList.add("is-live"); });
+        f.src = s.dataset.src;
+        s.querySelector(".c-view").appendChild(f);
+      } else if (!want && f) {
+        f.remove();
+        s.classList.remove("is-live");
+      }
+    });
+  };
+  const mo = new MutationObserver(sync);
+  mo.observe(gb, { attributes: true, attributeFilter: ["class"] });
+  gb.querySelectorAll(".g-chapter").forEach(a => mo.observe(a, { attributes: true, attributeFilter: ["class"] }));
+  phone.addEventListener("change", sync);
+  sync();
 })();
