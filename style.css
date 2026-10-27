@@ -521,6 +521,9 @@ html.gb-lock{overflow:hidden}
 .bookbtn-side .bk{filter:drop-shadow(3px 5px 0 rgba(0,0,0,.3))}
 .bookbtn-side .bk-pages{box-shadow:inset 0 0 0 1px #9c8350,2px 2px 0 1px rgba(0,0,0,.35)}
 .bookbtn-side:focus-visible .gbc{box-shadow:inset 0 0 0 1.5px #0d2a22,0 0 0 3px #ffe68a}
+/* the sidebar books hop in two frames, on the same 1.5s beat as the menu icons */
+@keyframes bk-hop{0%{translate:0 0}50%{translate:0 -4px}}
+.bookbtn-side .bk,.mbooks .bk{animation:bk-hop 1.5s steps(1) infinite}
 /* on narrow screens the sidebar is gone, so the books sit in a row under the hero buttons */
 .mbooks{display:none}
 @media (max-width:900px){
@@ -541,13 +544,18 @@ html.gb-lock{overflow:hidden}
   .mbooks .bookbtn-hist{--bk-w:40px;gap:8px}
   .mbooks .btn-meta{display:none}
   .mbooks .btn-label{font-size:1rem}
+  .mbooks .bookbtn,.mbooks .bookbtn-text{min-width:0}
+  .mbooks .bookbtn{flex-direction:column;justify-content:flex-end;text-align:center}
+  .mbooks .bookbtn-text{align-items:center;line-height:1.15}
+  .mbooks .bookbtn-main,.mbooks .bookbtn-hist{flex:1 1 0}
+}
 }
 @media (max-width:680px){
   .bookbtn-big{--bk-w:72px;display:flex;padding:12px 18px 12px 16px}
 }
 @media (prefers-reduced-motion:reduce){
   .bk{transition:none}
-  .bookbtn:hover .bk,.bookbtn:focus-visible .bk{animation:none}
+  .bookbtn:hover .bk,.bookbtn:focus-visible .bk,.bookbtn-side .bk,.mbooks .bk{animation:none}
 }
 /* the book on its way between the button and the full cover */
 .gb-flyer{position:fixed;z-index:4;left:0;top:0;pointer-events:none;transform-origin:0 50%}
