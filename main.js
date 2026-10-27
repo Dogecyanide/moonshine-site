@@ -16,7 +16,7 @@ const DISCORD = "https://discord.gg/72c42Teq3A";
 const JA = {
   title: "Moonshine：スーパーマリオサンシャイン練習mod",
   tagline: "スーパーマリオサンシャインの練習用mod",
-  sub: "Nintendont経由のWii実機でエミュレーターのようなステート、GCT generatorの練習コードを内蔵、ILシステム、ゴーストなど多数の機能を搭載。<strong>日本版1.0</strong>・<strong>北米版</strong>・<strong>欧州版</strong>に対応。",
+  sub: "WiiとDolphinで遊べる、スーパーマリオサンシャインのフル機能の練習mod。エミュレーターのような3つのステート、Geckoコードの内蔵、ILシステム、ゴーストとの競走・観察、乱数の操作など、まだまだたくさん。<strong>日本版1.0</strong>・<strong>欧州版</strong>・<strong>北米版</strong>に対応。",
   dlMain: "Wii版をダウンロード",
   dlDolphin: "Dolphin版をダウンロード",
   jpOnly: "日本版専用",
@@ -44,24 +44,24 @@ const JA = {
   installH: "インストール",
   wiiH: "Wii（実機）",
   wii1: "<strong>Launcher</strong>のZIPをダウンロードします。",
-  wii2: "ZIP内の<code>apps</code>フォルダーをSDカードの一番上にコピーします。ランチャーの場所は<code>/apps/moonshine_launcher/boot.dol</code>です。",
-  wii3: "Homebrew Channelから起動し、SD・USB・実ディスクから日本・北米・欧州版のサンシャインを選びます。",
+  wii2: "ZIPの中身をSDカードの一番上にコピーします。<code>apps</code>フォルダーの中に<code>moonshine_launcher</code>フォルダーが入ればOKです。",
+  wii3: "Homebrew Channelから起動し、ゲーム版と設定を選んだら、あとは楽しむだけ。",
   wiiNote: "更新する場合は、アプリのファイルを置き換え、ランチャーとmodのファイルは同じZIPのものを使ってください。<code>apps/susamune_launcher</code>が残っている場合は、先に<code>apps/moonshine_launcher</code>へ名前を変更します。設定・記録・ゴースト・ステートは<code>/Moonshine data</code>に保存されます。",
   dolH: "Dolphin（エミュレーター）",
   dol1: "<strong>Dolphin</strong>のZIPをダウンロードします。",
   dol2: "<a href=\"https://github.com/Alcaro/Flips/releases\" target=\"_blank\" rel=\"noopener\">Floating IPS</a>などのBPSパッチャーで、対応するBPSパッチを自分のクリーンなISOに適用します。パッチは書き込み前に元のイメージを確認します。",
   dol3: "設定を保存するため、<strong>スロットB</strong>にメモリーカードを挿してください。",
   dol4: "ステートで汚れを正しく保存・読み込みするには、<em>グラフィック設定 → Hacks → Texture Cache Accuracy</em>を<strong>Safe</strong>にします。",
-  dolNote: "SDステートとTASファイルのメニューにはWiiランチャーが必要です。Dolphinではメモリ内の3スロットを使えます。",
+  dolNote: "3.0.0から、DolphinもWiiと同等になりました。すべての機能をどちらでも使えます。",
   warn: "Geckoコードを有効にしたままMoonshineを使うことは強くおすすめしません。Moonshineの機能を壊すか、逆に壊される原因になります。ゲームキューブ実機には対応していません。",
   featH: "主な機能",
-  f1: "圧縮された3つのスロットを使える<strong>ステート</strong>。Wiiでは名前を付けてSDにも保存できます。",
-  f2: "<strong>コマ送り・フリーカメラ</strong>とTASプロジェクト。",
-  f3: "タイマー、メタデータ、入力表示、レベルセレクト、ワープホイールなどの<strong>練習コードを内蔵</strong>。",
-  f4: "ステージごとのPB、PB更新時のファンファーレ、Any%のドルピックタウン区間に対応した<strong>ILシステム</strong>。ワープ一覧としても使えます。",
-  f5: "<strong>ゴースト</strong>と競走できます。",
-  f6: "ボタン割り当てからHUD要素の文字・位置・色・大きさまで、<strong>ほぼすべてをカスタマイズ可能</strong>。",
-  guides: "AIの力を借りて作られたソフトウェアです。自己責任でご利用ください。ガイド：<a href=\"https://github.com/panther03/moonshine/blob/main/doc/guide-ja.md\">日本語</a> · <a href=\"https://github.com/panther03/moonshine/blob/main/doc/guide-en.md\">English</a>",
+  f1: "Wiiで3スロット使える<strong>ステート</strong>で、練習を一気に加速。SDカードに保存して後で使うこともできます。",
+  f2: "<strong>さらに進化した練習コード</strong>：従来のGeckoコードをすべて移植し、多くを改良しました。タイマー、メタデータ、レベルセレクトなど。",
+  f3: "見て、競って、共有できる<strong>ゴースト</strong>！ゴーストから操作を引き継いで、そのままILを最後まで走ることもできます！",
+  f4: "<strong>コマ送り、実機でのTAS、フリーカメラ</strong>。自分好みに使いこなそう。",
+  f5: "PBの記録、PB更新時のファンファーレ、実績まで備えた<strong>ILシステム</strong>！",
+  f6: "タイマーからマリオの靴の色まで、<strong>すべてをカスタマイズ</strong>。Moonshineのほぼすべてを自分好みにできます。",
+  guides: "このプロジェクトはAIの支援を受けて開発しています。バグやクラッシュは<a href=\"https://discord.gg/72c42Teq3A\">Discord</a>または<a href=\"https://github.com/panther03/moonshine/issues\">GitHubのIssues</a>で報告してください。クラッシュ報告は<code>Moonshine data</code> &gt; <code>crashes</code>にあります。ガイド：<a href=\"https://github.com/panther03/moonshine/blob/main/doc/guide-ja.md\">日本語</a> · <a href=\"https://github.com/panther03/moonshine/blob/main/doc/guide-en.md\">English</a>",
   allReleases: "すべてのリリース",
   allFeat: "全機能ガイド",
   allFeatMeta: "ガイドブックを開く",
@@ -85,6 +85,18 @@ const JA = {
   prevSection: "前のセクション",
   nextSection: "次のセクション",
   linksLabel: "リンク",
+  wiiUsb: "過去にUSBからの読み込みで問題が起きたことがあるため、SDからの読み込みをおすすめします。",
+  gHeading: "全機能ガイド",
+  gClose: "本を閉じる",
+  gDownload: "ダウンロード",
+  gBack: "戻る",
+  gFullGuide: "GitHubの公式ガイド",
+  gVersion: "Moonshine V2.3.3向け。プロジェクトのガイドとリリースノートをもとに書いています。",
+  gTabs: "カテゴリー",
+  gPrevCat: "前のカテゴリー",
+  gNextCat: "次のカテゴリー",
+  gChLabel: "章",
+  gPnLabel: "前後の章",
 };
 const EN_EXTRA = {
   title: document.title,
@@ -102,6 +114,11 @@ const EN_EXTRA = {
   prevSection: "Previous section",
   nextSection: "Next section",
   linksLabel: "Links",
+  gTabs: "Categories",
+  gPrevCat: "Previous category",
+  gNextCat: "Next category",
+  gChLabel: "Chapters",
+  gPnLabel: "Previous and next chapter",
 };
 
 const EN = { ...EN_EXTRA };
@@ -141,6 +158,7 @@ function setLang(l, remember) {
   document.querySelectorAll(".row.dl").forEach((r, i) => r.classList.toggle("is-default", i === (l === "ja" ? 1 : 0)));
   renderTrailer();
   renderRelease();
+  document.dispatchEvent(new CustomEvent("langchange", { detail: l }));
 }
 
 function renderTrailer() {
@@ -288,7 +306,7 @@ renderBackground();
 // ---------------------------------------------------------------------
 // Tab strip: highlight the section in view, L/R step between sections.
 // ---------------------------------------------------------------------
-const tabs = [...document.querySelectorAll(".tab")];
+const tabs = [...document.querySelectorAll("#top .tab")];
 const tabSections = tabs.map(a => document.querySelector(a.getAttribute("href")));
 let activeTab = -1;
 function setTab(i) {
@@ -307,7 +325,7 @@ function setTab(i) {
   }
 }
 function updateTab() {
-  const nav = document.querySelector(".tabs");
+  const nav = document.querySelector("#top .tabs");
   const line = nav.getBoundingClientRect().bottom + 24;
   let i = 0;
   tabSections.forEach((sec, j) => { if (sec && sec.getBoundingClientRect().top <= line) i = j; });
@@ -321,7 +339,7 @@ addEventListener("scroll", () => {
 }, { passive: true });
 addEventListener("resize", updateTab);
 updateTab();
-document.querySelectorAll(".shoulder").forEach(b => b.addEventListener("click", () => {
+document.querySelectorAll("#top .shoulder").forEach(b => b.addEventListener("click", () => {
   const i = Math.max(0, Math.min(tabs.length - 1, activeTab + Number(b.dataset.step)));
   tabSections[i].scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth" });
   setTab(i);

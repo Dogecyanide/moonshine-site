@@ -346,7 +346,7 @@ p.small.help{margin-top:18px}
   background:linear-gradient(90deg,rgba(0,0,0,0) 0,rgba(0,0,0,.1) 55%,rgba(30,20,0,.38) 100%)}
 .js .g-content.is-turning{z-index:5}
 
-/* the button on the main page that opens this guide */
+/* the buttons on the main page that open the guidebook */
 .btn-guide{margin-top:20px}
 
 @media (max-width:900px){
@@ -378,6 +378,58 @@ p.small.help{margin-top:18px}
 @media (prefers-reduced-motion:reduce){
   .g-ch::before{animation:none!important;background-position:0 0!important}
   .g-chapter h2 .sprite{animation:none!important;background-position:0 0!important;transform:none!important}
+}
+
+/* ======================================================================
+   The guidebook opens over the main page (#guide). Without JS it simply
+   sits under the main book. With JS it is a fixed overlay with its own
+   scroll; the cover swings open on the spine (3D only while animating).
+   ====================================================================== */
+.gb-cover,.gb-shade,.gb-scrim,.gb-close{display:none}
+.no-js .gb{margin-top:48px}
+.js .gb{position:fixed;inset:0;z-index:50;overflow-y:auto;overscroll-behavior:contain;padding:34px 24px 44px 46px}
+.js .gb:not(.is-open){display:none}
+html.gb-lock{overflow:hidden}
+.js .gb-scrim{display:block;position:fixed;inset:0;background:rgba(4,16,12,.58);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+[data-theme="light"] .gb-scrim{background:rgba(22,52,40,.45)}
+.js .gb-book{z-index:1}
+.js .gb-close{display:inline-flex;align-items:center;gap:7px;font:800 .85rem/1 inherit;font-family:inherit;color:var(--ink);background:var(--paper-hi);
+  border:0;border-radius:8px;padding:5px 12px 5px 7px;cursor:pointer;box-shadow:0 0 0 2px var(--trim)}
+.gb-close:hover{background:var(--sel);color:var(--sel-text)}
+.gb-close:focus-visible{outline:none;box-shadow:0 0 0 2px var(--trim),0 0 0 5px var(--focus)}
+.gb .top-controls{flex-direction:row;align-items:center}
+.gb .g-side-inner{top:74px}
+.gb .book-foot .legal{margin-top:6px}
+
+.gb.is-anim .gb-book{perspective:2600px;perspective-origin:0 320px}
+.gb.is-anim .gb-cover{display:block;position:absolute;z-index:9;left:-30px;top:-10px;bottom:-10px;right:-4px;transform-origin:30px 50%;transform-style:preserve-3d;pointer-events:none}
+.gb-face{position:absolute;inset:0;border-radius:7px 10px 10px 7px;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.gb-front{overflow:hidden;
+  background:linear-gradient(90deg,rgba(0,0,0,.45) 0,rgba(0,0,0,.2) 26px,rgba(255,240,190,.18) 30px,rgba(0,0,0,.16) 34px,rgba(0,0,0,0) 48px),
+    radial-gradient(130% 70% at 35% 12%,#4c9467,#2b6447 45%,#1b4231 100%);
+  box-shadow:inset 0 0 0 2px #143222,inset 0 0 40px rgba(0,0,0,.35)}
+.gb-front::before{content:"";position:absolute;left:52px;top:22px;right:22px;bottom:22px;border-radius:8px;
+  border:3px solid var(--trim);box-shadow:0 0 0 2px rgba(255,236,162,.35),inset 0 0 0 2px rgba(255,236,162,.35)}
+.gb-front-inner{position:absolute;left:30px;right:0;top:0;height:min(100%,82vh);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center}
+.gb-front .wordmark{width:min(520px,72%);height:auto;filter:drop-shadow(0 3px 0 rgba(0,0,0,.35))}
+.gb-cover-title{font-weight:800;font-size:2.3rem;line-height:1.1;letter-spacing:.14em;color:var(--trim-light);text-shadow:0 2px 0 rgba(60,30,0,.6)}
+.gb-cover-sub{font-weight:800;font-size:.95rem;letter-spacing:.08em;color:#fff3c4;opacity:.85}
+.gb-inside{transform:rotateY(180deg);
+  background:linear-gradient(270deg,rgba(40,25,5,.32),rgba(40,25,5,0) 46px),var(--sheet) var(--paper-img) 0 0/64px 64px;
+  box-shadow:inset 0 0 0 2px var(--rule)}
+.gb.is-anim .gb-shade{display:block;position:absolute;inset:0;z-index:8;pointer-events:none;border-radius:4px 8px 8px 4px;
+  background:linear-gradient(90deg,rgba(20,15,5,.55),rgba(20,15,5,.18) 60%,rgba(20,15,5,.3))}
+@media (max-width:900px){
+  .gb .g-side-inner{top:auto}
+}
+@media (max-width:680px){
+  .js .gb{padding:12px 10px 28px 28px}
+  .gb.is-anim .gb-cover{left:-20px;transform-origin:20px 50%}
+  .gb-front-inner{left:20px}
+  .gb-front::before{left:34px;top:14px;right:14px;bottom:14px}
+  .gb-cover-title{font-size:1.7rem}
+  .gb-close span:last-child{display:none}
+  .js .gb-close{padding:5px 7px}
 }
 
 /* GameCube face buttons, drawn like the real controller (A big green, B small red, X/Y grey kidney beans, Z purple, L/R grey shoulders) */
