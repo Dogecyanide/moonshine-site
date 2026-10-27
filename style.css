@@ -488,6 +488,19 @@ html.gb-lock{overflow:hidden}
 }
 .bookbtn:focus-visible .gbc-hist{box-shadow:inset 0 0 0 1.5px #2a0a06,0 0 0 3px var(--focus)}
 .bookbtn-side:focus-visible .gbc-hist{box-shadow:inset 0 0 0 1.5px #2a0a06,0 0 0 3px #ffe68a}
+/* the FAQ book: deep blue leather, same gold trim, a Pianta instead of the Shine */
+.gbc-faq{background:radial-gradient(120% 85% at 40% 30%,rgba(92,140,214,.5),rgba(30,58,118,.6) 52%,rgba(6,14,38,.9)),#1d3a6e url(assets/menu/paper-dark.png) 0 0/64px 64px;
+  box-shadow:inset 0 0 0 1.5px #08142e,inset 0 0 18px rgba(0,0,0,.4)}
+.gbc-faq .gbc-sub{color:#1d3a6e}
+.gbc-faq .gbc-qp{background:url(assets/menu/tab-pianta.png) no-repeat 0 0/200% 100%;width:max(9px,8.5cqw);aspect-ratio:24/32;translate:-50% -70%;
+  animation:pianta 3s steps(1) infinite}
+.gb-faq .gb-front{background:#1d3a6e}
+.bookbtn:focus-visible .gbc-faq{box-shadow:inset 0 0 0 1.5px #08142e,0 0 0 3px var(--focus)}
+.bookbtn-side:focus-visible .gbc-faq{box-shadow:inset 0 0 0 1.5px #08142e,0 0 0 3px #ffe68a}
+@media (max-width:680px){
+  .gb-faq .tab:not(.is-active) span:not(.sprite){position:static;width:auto;height:auto;overflow:visible;clip-path:none}
+  .gb-faq .tab:not(.is-active) .sprite{display:none}
+}
 
 /* ---- the book as a button ---- */
 .bookbtn{--bk-w:96px;position:relative;display:flex;align-items:center;gap:16px;color:var(--ink);text-decoration:none;border-radius:10px;
@@ -508,7 +521,7 @@ html.gb-lock{overflow:hidden}
 .bookbtn-big{--bk-w:92px;display:inline-flex;margin-top:24px;padding:14px 30px 14px 20px;background:var(--paper-hi);
   box-shadow:0 0 0 2px var(--trim),inset 0 0 0 2px var(--trim-light),3px 4px 0 2px var(--drop)}
 .bookbtn-big .btn-label{font-size:1.15rem}
-/* the two books on the teal sidebar: the guidebook first and bigger, the version history smaller under it */
+/* the books on the teal sidebar: the guidebook first and bigger, then the FAQ and the version history smaller under it */
 .side-books{display:flex;flex-direction:column;align-items:center;gap:20px;padding:0 10px 26px}
 .bookbtn-side{flex-direction:column;gap:10px;color:var(--side-text);text-align:center}
 .bookbtn-side .bookbtn-text{align-items:center;line-height:1.15}
@@ -516,8 +529,8 @@ html.gb-lock{overflow:hidden}
 .bookbtn-side .btn-meta{font-size:.76rem;opacity:.85}
 .bookbtn-side:hover .btn-label{color:#ffe68a}
 .bookbtn-side.bookbtn-main{--bk-w:104px}
-.bookbtn-side.bookbtn-hist{--bk-w:66px;gap:8px}
-.bookbtn-side.bookbtn-hist .btn-label{font-size:.88rem}
+.bookbtn-side.bookbtn-hist,.bookbtn-side.bookbtn-faq{--bk-w:66px;gap:8px}
+.bookbtn-side.bookbtn-hist .btn-label,.bookbtn-side.bookbtn-faq .btn-label{font-size:.88rem}
 .bookbtn-side .bk{filter:drop-shadow(3px 5px 0 rgba(0,0,0,.3))}
 .bookbtn-side .bk-pages{box-shadow:inset 0 0 0 1px #9c8350,2px 2px 0 1px rgba(0,0,0,.35)}
 .bookbtn-side:focus-visible .gbc{box-shadow:inset 0 0 0 1.5px #0d2a22,0 0 0 3px #ffe68a}
@@ -531,24 +544,30 @@ html.gb-lock{overflow:hidden}
   .mbooks .bookbtn{padding:10px 14px 10px 16px;background:var(--paper-hi);gap:14px;
     box-shadow:0 0 0 2px var(--trim),inset 0 0 0 2px var(--trim-light),3px 4px 0 2px var(--drop)}
   .mbooks .bookbtn-main{--bk-w:76px;flex:1.6 1 0}
-  .mbooks .bookbtn-hist{--bk-w:46px;flex:1 1 0;gap:10px}
+  .mbooks .bookbtn-hist,.mbooks .bookbtn-faq{--bk-w:46px;flex:1 1 0;gap:10px}
   .mbooks .bookbtn-text{line-height:1.15}
   .mbooks .bookbtn-main .btn-label{font-size:1.05rem}
-  .mbooks .bookbtn-hist .btn-label{font-size:.9rem}
+  .mbooks .bookbtn-hist .btn-label,.mbooks .bookbtn-faq .btn-label{font-size:.9rem}
   .mbooks .btn-meta{font-size:.8rem}
 }
-@media (max-width:480px){
+@media (max-width:600px){
   .mbooks{gap:10px}
   .mbooks .bookbtn{padding:8px 10px;gap:10px}
   .mbooks .bookbtn-main{--bk-w:60px}
-  .mbooks .bookbtn-hist{--bk-w:40px;gap:8px}
+  .mbooks .bookbtn-hist,.mbooks .bookbtn-faq{--bk-w:40px;gap:8px}
   .mbooks .btn-meta{display:none}
   .mbooks .btn-label{font-size:1rem}
   .mbooks .bookbtn,.mbooks .bookbtn-text{min-width:0}
   .mbooks .bookbtn{flex-direction:column;justify-content:flex-end;text-align:center}
   .mbooks .bookbtn-text{align-items:center;line-height:1.15}
-  .mbooks .bookbtn-main,.mbooks .bookbtn-hist{flex:1 1 0}
+  .mbooks .bookbtn-main,.mbooks .bookbtn-hist,.mbooks .bookbtn-faq{flex:1 1 0}
 }
+@media (max-width:360px){
+  .mbooks{gap:8px}
+  .mbooks .bookbtn{padding:8px 4px}
+  .mbooks .bookbtn-main{--bk-w:52px}
+  .mbooks .bookbtn-hist,.mbooks .bookbtn-faq{--bk-w:36px}
+  .mbooks .bookbtn .btn-label{font-size:.86rem;white-space:normal}
 }
 @media (max-width:680px){
   .bookbtn-big{--bk-w:72px;display:flex;padding:12px 18px 12px 16px}

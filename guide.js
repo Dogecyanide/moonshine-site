@@ -1,5 +1,5 @@
-// The books that open over the main page: the "All features" guidebook (#guide) and the
-// "Version history" book (#history). Both live inside index.html and share all of this code.
+// The books that open over the main page: the "All features" guidebook (#guide), the FAQ (#faq)
+// and the "Version history" book (#history). All live inside index.html and share all of this code.
 // Routes: #<book> opens one, #<book>/<chapter> opens a chapter. Theme and language come from main.js.
 (function () {
   const root = document.documentElement;
@@ -10,10 +10,15 @@
       title: { en: "All features · Moonshine guidebook", ja: "全機能ガイド · Moonshine" },
       upstream: l => `https://github.com/panther03/moonshine/blob/main/doc/guide-${l}.md`,
     },
+    faq: {
+      title: { en: "FAQ · Moonshine", ja: "よくある質問 · Moonshine" },
+    },
     history: {
       title: { en: "Version history · Moonshine", ja: "バージョン履歴 · Moonshine" },
     },
   };
+  // Every book, so opening one from a link inside another (the FAQ links to guide chapters) closes the other first.
+  const instances = [];
   Object.entries(BOOKS).forEach(([name, cfg]) => {
     const el = document.getElementById(name);
     if (el) makeBook(el, name, cfg);
@@ -204,9 +209,11 @@ function makeBook(gb, NAME, CFG) {
 
   async function open(id, opts = {}) {
     if (isOpen) { show(id, { focus: true }); return; }
+    const fromBook = instances.some(b => b.name !== NAME && b.isOpen());
+    instances.forEach(b => { if (b.name !== NAME && b.isOpen()) b.closeNow(); });
     const my = ++run;
     isOpen = true;
-    lastFocus = document.activeElement;
+    lastFocus = fromBook ? null : document.activeElement;
     lastOrigin = opts.origin || null;
     mainTitle = document.title;
     settle();
@@ -264,9 +271,11 @@ function makeBook(gb, NAME, CFG) {
     const finish = () => {
       settle();
       gb.classList.remove("is-open");
-      root.classList.remove("gb-lock");
-      outside.forEach(el => { el.inert = false; });
-      document.title = mainTitle;
+      if (!instances.some(b => b.name !== NAME && b.isOpen())) { // another book may have taken over the page
+        root.classList.remove("gb-lock");
+        outside.forEach(el => { el.inert = false; });
+        document.title = mainTitle;
+      }
       document.querySelectorAll(".bookbtn.is-away").forEach(b => b.classList.remove("is-away"));
       srcBtn = null;
       if (lastFocus && lastFocus.isConnected && opts.restoreFocus !== false) lastFocus.focus({ preventScroll: true });
@@ -347,7 +356,13 @@ function makeBook(gb, NAME, CFG) {
 
   addEventListener("popstate", () => {
     const r = route();
-    if (r === null) { if (isOpen) { pushed = false; close(); } return; }
+    if (r === null) {
+      if (!isOpen) return;
+      pushed = false;
+      // Back from here into another book (a guide chapter opened from the FAQ): that book takes over without this one flying home.
+      close(instances.some(b => b.name !== NAME && b.routed()) ? { animate: false, restoreFocus: false } : {});
+      return;
+    }
     pushed = !!(history.state && history.state.gb === NAME);
     if (isOpen) { if (!current || current.dataset.ch !== r) show(r, { focus: true }); }
     else open(r, { animate: true });
@@ -379,12 +394,14 @@ function makeBook(gb, NAME, CFG) {
     updateLang();
   });
 
+  instances.push({ name: NAME, isOpen: () => isOpen, routed: () => route() !== null, closeNow: () => close({ animate: false, restoreFocus: false }) });
+
   // ---- start ----
   show(chapters[0].dataset.ch, { animate: false });
   updateLang();
   const start = route();
   if (start !== null) {
-    // Deep link (index.html#guide/ghosts or #history/v2.3.3): open straight away, with a history entry under it so Back closes the book.
+    // Deep link (index.html#guide/ghosts, #faq/crash or #history/v2.3.3): open straight away, with a history entry under it so Back closes the book.
     const id = byId(start) ? start : chapters[0].dataset.ch;
     const base = location.pathname + location.search;
     history.replaceState(null, "", base);

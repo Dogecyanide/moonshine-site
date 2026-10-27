@@ -109,6 +109,15 @@ const JA = {
   hNextCat: "古いバージョン",
   hChLabel: "リリース",
   hPnLabel: "新しいリリースと古いリリース",
+  faq: "よくある質問",
+  faqMeta: "すぐ分かる答え",
+  fHeading: "よくある質問",
+  fDiscord: "Discordで質問する",
+  fTabs: "トピック",
+  fPrevCat: "前のトピック",
+  fNextCat: "次のトピック",
+  fChLabel: "質問",
+  fPnLabel: "前後の質問",
 };
 const EN_EXTRA = {
   title: document.title,
@@ -137,6 +146,11 @@ const EN_EXTRA = {
   hNextCat: "Older versions",
   hChLabel: "Releases",
   hPnLabel: "Newer and older release",
+  fTabs: "Topics",
+  fPrevCat: "Previous topic",
+  fNextCat: "Next topic",
+  fChLabel: "Questions",
+  fPnLabel: "Previous and next question",
 };
 
 const EN = { ...EN_EXTRA };
