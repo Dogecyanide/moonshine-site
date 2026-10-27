@@ -451,9 +451,14 @@ html.gb-lock{overflow:hidden}
 .gbc-shine{position:absolute;left:50%;top:0;translate:-50% -72%;width:max(12px,12cqw);aspect-ratio:64/72;
   background:url(assets/menu/shine.png) no-repeat center/100% 100%;transform-origin:50% 100%;animation:lean 1.5s steps(1) infinite}
 .gbc-wm{display:block;width:100%;height:auto;margin-top:max(2px,1.6cqw)}
-.gbc-title{display:flex;align-items:center;gap:2.3cqw;margin-top:max(2px,2cqw);font-weight:800;font-size:max(7.5px,6.3cqw);letter-spacing:.06em;color:#246b4e;white-space:nowrap}
+.gbc-title{display:flex;align-items:center;gap:2.3cqw;margin-top:max(2px,2cqw);font-weight:800;font-size:4.4cqw;letter-spacing:.08em;color:#8a5a1c;white-space:nowrap}
 .gbc-title::before,.gbc-title::after{content:"";width:7.5cqw;height:max(1px,.6cqw);background:#bb8525;border-radius:1px}
-.gbc-sub{margin-top:max(1px,1cqw);font-weight:800;font-size:max(6px,3cqw);letter-spacing:.08em;color:#6c5830;white-space:nowrap}
+.gbc-sub{margin-top:max(1px,.6cqw);font-weight:900;font-size:max(10px,7.4cqw);line-height:1.1;letter-spacing:.03em;color:#1c5a41;white-space:nowrap}
+/* On the small book button there is only room for one line, so "All features" gets it. */
+@container (max-width:170px){
+  .gbc-title{display:none}
+  .gbc-sub{margin-top:max(2px,3cqw);font-size:clamp(11px,16.5cqw,14px);line-height:1.02;letter-spacing:0;white-space:normal;word-break:keep-all;overflow-wrap:normal}
+}
 .gbc-ship,.gbc-fish,.gbc-palm,.gbc-pianta{position:absolute;bottom:calc(max(5px,2.3cqw) + max(2px,1.2cqw));animation:pose 1.5s steps(1) infinite}
 .gbc-ship{left:calc(max(7px,2.7cqw) + max(6px,4cqw));width:max(19px,8.5cqw);aspect-ratio:96/72;background-image:url(assets/menu/ship.png)}
 .gbc-fish{left:calc(max(7px,2.7cqw) + max(26px,13.5cqw));width:max(10px,4.4cqw);aspect-ratio:1;background-image:url(assets/menu/fish.png);margin-bottom:max(1px,.6cqw)}
@@ -478,14 +483,20 @@ html.gb-lock{overflow:hidden}
 .bookbtn:hover .btn-label{color:var(--value)}
 .bookbtn.is-away .bk{visibility:hidden}
 .cta .bookbtn-hero{grid-column:3;grid-row:1/span 2;align-self:center;margin:0 4px 0 6px}
-.bookbtn-hero .bookbtn-text{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.cta .bookbtn-hero{--bk-w:80px;flex-direction:column;gap:12px}
+.bookbtn-hero .bookbtn-text{align-items:center;text-align:center;line-height:1.1}
+.bookbtn-hero .btn-label{font-size:.95rem;color:var(--value);white-space:nowrap}
+.bookbtn-hero .btn-meta{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .bookbtn-big{--bk-w:92px;display:inline-flex;margin-top:24px;padding:14px 30px 14px 20px;background:var(--paper-hi);
   box-shadow:0 0 0 2px var(--trim),inset 0 0 0 2px var(--trim-light),3px 4px 0 2px var(--drop)}
 .bookbtn-big .btn-label{font-size:1.15rem}
 @media (max-width:680px){
-  .cta .bookbtn-hero{--bk-w:72px;grid-column:1/-1;grid-row:auto;margin:0;padding:10px 16px 10px 18px;background:var(--paper-hi);
+  .cta .bookbtn-hero{--bk-w:80px;grid-column:1/-1;grid-row:auto;margin:0;padding:10px 16px 10px 18px;background:var(--paper-hi);
     box-shadow:0 0 0 2px var(--trim),inset 0 0 0 2px var(--trim-light),3px 4px 0 2px var(--drop)}
-  .bookbtn-hero .bookbtn-text{position:static;width:auto;height:auto;overflow:visible;clip-path:none;white-space:normal}
+  .cta .bookbtn-hero{flex-direction:row;gap:16px}
+  .bookbtn-hero .bookbtn-text{align-items:flex-start;text-align:left}
+  .bookbtn-hero .btn-label{font-size:1rem;color:var(--ink)}
+  .bookbtn-hero .btn-meta{position:static;width:auto;height:auto;overflow:visible;clip-path:none;white-space:normal}
   .bookbtn-big{--bk-w:72px;display:flex;padding:12px 18px 12px 16px}
 }
 @media (prefers-reduced-motion:reduce){
